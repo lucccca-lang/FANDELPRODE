@@ -1587,26 +1587,39 @@
                 return; 
             }
 
-            const liga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
-            const escudoLocal = `escudos/${normalizarNombre(localInput)}.png`;
-            const escudoVisitante = `escudos/${normalizarNombre(visitanteInput)}.png`;
-
             if (idEditando) {
                 let index = baseDeDatos[tipoBoleta].findIndex(p => p.id === idEditando);
                 if (index !== -1) { 
+                    let partidoViejo = baseDeDatos[tipoBoleta][index];
+                    
+                    // Solo actualizamos el escudo si el usuario modificó el nombre del equipo.
+                    // Si dejó el mismo nombre, conservamos el escudo original (clave para no romper los de la API).
+                    let nuevoEscudoLocal = (partidoViejo.local === localInput) ? partidoViejo.escudoLocal : `escudos/${normalizarNombre(localInput)}.png`;
+                    let nuevoEscudoVisitante = (partidoViejo.visitante === visitanteInput) ? partidoViejo.escudoVisitante : `escudos/${normalizarNombre(visitanteInput)}.png`;
+                    
+                    // Solo actualizamos el logo de la liga si el usuario modificó el nombre en el input de liga.
+                    let nuevaLiga = partidoViejo.liga;
+                    if (partidoViejo.ligaNombre !== ligaInput) {
+                        nuevaLiga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
+                    }
+
                     baseDeDatos[tipoBoleta][index] = { 
-                        ...baseDeDatos[tipoBoleta][index], 
+                        ...partidoViejo, 
                         circulos: cantCirculos, 
-                        liga, 
+                        liga: nuevaLiga, 
                         ligaNombre: ligaInput, 
                         local: localInput, 
-                        escudoLocal, 
+                        escudoLocal: nuevoEscudoLocal, 
                         visitante: visitanteInput, 
-                        escudoVisitante 
+                        escudoVisitante: nuevoEscudoVisitante 
                     }; 
                 }
                 cancelarEdicion(); 
             } else {
+                const liga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
+                const escudoLocal = `escudos/${normalizarNombre(localInput)}.png`;
+                const escudoVisitante = `escudos/${normalizarNombre(visitanteInput)}.png`;
+
                 baseDeDatos[tipoBoleta].push({ 
                     id: Date.now(), 
                     circulos: cantCirculos, 
