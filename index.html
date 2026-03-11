@@ -34,6 +34,12 @@
             text-transform: uppercase; 
         }
 
+        .header-botones {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
         .btn-caja-header {
             background-color: #27ae60;
             width: auto;
@@ -41,10 +47,36 @@
             font-size: 16px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
         .btn-caja-header:hover {
             background-color: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        .btn-datos-header {
+            background-color: #34495e;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-datos-header:hover {
+            background-color: #2c3e50;
             transform: scale(1.05);
         }
 
@@ -621,7 +653,7 @@
         }
 
         /* =================================================== */
-        /* --- ESTILOS DEL MODAL DE FINANZAS --- */
+        /* --- ESTILOS DE LOS MODALES --- */
         /* =================================================== */
         .modal-fondo {
             display: none;
@@ -657,7 +689,7 @@
 
         .modal-header h2 {
             margin: 0;
-            color: #27ae60;
+            color: #fff;
         }
 
         .btn-cerrar-modal {
@@ -672,6 +704,7 @@
 
         .btn-cerrar-modal:hover { color: white; background: transparent; }
 
+        /* Estilos específicos Modal Finanzas */
         .resumen-finanzas {
             display: flex;
             gap: 15px;
@@ -719,6 +752,28 @@
         .montos-finanza .ingreso { color: #f1c40f; }
         .montos-finanza .ganancia { color: #2ecc71; font-weight: bold; }
 
+        /* Estilos específicos Modal Datos */
+        .btn-datos {
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-descargar-datos { background-color: #2980b9; }
+        .btn-descargar-datos:hover { background-color: #3498db; }
+        
+        .btn-restaurar-datos { background-color: #d35400; position: relative; overflow: hidden; }
+        .btn-restaurar-datos:hover { background-color: #e67e22; }
+        .btn-restaurar-datos input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer;
+        }
+
         @media (max-width: 900px) { 
             .header-principal { flex-direction: column; gap: 15px; text-align: center; }
             .contenedor { flex-direction: column; align-items: center; } 
@@ -732,7 +787,10 @@
 
     <div class="header-principal">
         <h1 class="titulo-principal">FAN DEL PRODE</h1>
-        <button onclick="abrirCaja()" class="btn-caja-header">💰 GESTIÓN DE CAJA</button>
+        <div class="header-botones">
+            <button onclick="abrirCaja()" class="btn-caja-header">💰 GESTIÓN DE CAJA</button>
+            <button onclick="abrirDatos()" class="btn-datos-header" title="Gestión de Datos">⚙️</button>
+        </div>
     </div>
 
     <button id="btn-toggle-cargar">HABILITAR SECCIÓN CARGAR</button>
@@ -841,7 +899,7 @@
     <div id="modal-finanzas" class="modal-fondo">
         <div class="modal-contenido">
             <div class="modal-header">
-                <h2>💰 GESTIÓN DE CAJA</h2>
+                <h2 style="color: #27ae60;">💰 GESTIÓN DE CAJA</h2>
                 <button class="btn-cerrar-modal" onclick="cerrarCaja()">✖</button>
             </div>
 
@@ -880,6 +938,37 @@
 
             <div class="lista-finanzas" id="contenedor-lista-finanzas">
                 </div>
+        </div>
+    </div>
+
+    <div id="modal-datos" class="modal-fondo">
+        <div class="modal-contenido" style="max-width: 450px;">
+            <div class="modal-header">
+                <h2>⚙️ GESTIÓN DE DATOS</h2>
+                <button class="btn-cerrar-modal" onclick="cerrarDatos()">✖</button>
+            </div>
+            
+            <p style="color: #aaa; font-size: 14px; margin-bottom: 20px; text-align: center;">
+                Descargá una copia de seguridad para pasar tus boletas, configuraciones y caja a otro dispositivo.
+            </p>
+
+            <button class="btn-datos btn-descargar-datos" onclick="exportarDatos()">
+                ⬇️ Descargar Copia de Seguridad
+            </button>
+            
+            <button class="btn-datos btn-restaurar-datos">
+                ⬆️ Restaurar Copia de Seguridad
+                <input type="file" accept=".json" onchange="importarDatos(event)">
+            </button>
+
+            <hr style="border: 0; border-top: 1px dashed #555; margin: 25px 0;">
+
+            <button class="btn-datos" style="background-color: #ab2323;" onclick="borrarTodoElSistema()">
+                🗑️ ELIMINAR TODOS LOS DATOS
+            </button>
+            <p style="color: #ab2323; font-size: 12px; text-align: center; margin-top: 5px;">
+                Cuidado: Esto formatea el sistema a cero.
+            </p>
         </div>
     </div>
 
@@ -945,6 +1034,63 @@
         };
 
         let idEditando = null;
+
+        // ==========================================
+        // GESTIÓN DE DATOS (BACKUP / RESTAURAR / BORRAR TODO)
+        // ==========================================
+        function abrirDatos() {
+            document.getElementById('modal-datos').style.display = 'flex';
+        }
+
+        function cerrarDatos() {
+            document.getElementById('modal-datos').style.display = 'none';
+        }
+
+        function exportarDatos() {
+            const backup = {
+                datos: localStorage.getItem('fandelprode_datos'),
+                config: localStorage.getItem('fandelprode_config'),
+                finanzas: localStorage.getItem('fandelprode_finanzas')
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "fandelprode_backup.json");
+            document.body.appendChild(downloadAnchorNode); 
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function importarDatos(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    if(backup.datos) localStorage.setItem('fandelprode_datos', backup.datos);
+                    if(backup.config) localStorage.setItem('fandelprode_config', backup.config);
+                    if(backup.finanzas) localStorage.setItem('fandelprode_finanzas', backup.finanzas);
+                    alert("✅ ¡Datos restaurados con éxito! La página se va a recargar para aplicar los cambios.");
+                    location.reload();
+                } catch (error) {
+                    alert("❌ Hubo un error al leer el archivo. Asegurate de que sea un backup válido de Fan del Prode.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function borrarTodoElSistema() {
+            if(confirm("⚠️ ATENCIÓN: ¿Estás completamente seguro de que querés ELIMINAR TODO EL SISTEMA?\n\nEsto va a borrar TODAS tus boletas armadas, TODAS tus configuraciones y TODO el historial de la Caja de Ganancias.\n\nEsta acción NO SE PUEDE DESHACER.")) {
+                if(confirm("Última advertencia. ¿Borrar absolutamente todo?")) {
+                    localStorage.removeItem('fandelprode_datos');
+                    localStorage.removeItem('fandelprode_config');
+                    localStorage.removeItem('fandelprode_finanzas');
+                    alert("🗑️ Sistema formateado a cero. La página se va a recargar.");
+                    location.reload();
+                }
+            }
+        }
 
         // ==========================================
         // SISTEMA DE FINANZAS / CAJA
@@ -1053,7 +1199,6 @@
                     let gananciaReal = f.ganancia !== null ? f.ganancia : 0;
                     totalGanancia += gananciaReal;
                     
-                    // Extraer mes/año de "dd/mm/yyyy, hh:mm"
                     let partes = f.fecha.split(',')[0].split('/');
                     let mesAnio = partes.length === 3 ? `${partes[1]}/${partes[2]}` : 'Desconocido';
                     
@@ -1112,12 +1257,11 @@
         }
 
         window.onclick = function(event) {
-            let modal = document.getElementById('modal-finanzas');
-            if (event.target === modal) {
-                cerrarCaja();
-            }
+            let modalFinanzas = document.getElementById('modal-finanzas');
+            let modalDatos = document.getElementById('modal-datos');
+            if (event.target === modalFinanzas) cerrarCaja();
+            if (event.target === modalDatos) cerrarDatos();
         }
-
 
         // ==========================================
         // SISTEMA PRINCIPAL (PRODE)
