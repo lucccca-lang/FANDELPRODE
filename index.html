@@ -111,6 +111,7 @@
             margin-bottom: 20px; 
             padding-bottom: 10px; 
             gap: 10px; 
+            width: 100%;
         }
 
         .btn-eliminar-todas { 
@@ -774,12 +775,38 @@
             opacity: 0; cursor: pointer;
         }
 
+        /* =================================================== */
+        /* --- MEDIA QUERIES PARA CELULARES Y CENTRADO --- */
+        /* =================================================== */
         @media (max-width: 900px) { 
             .header-principal { flex-direction: column; gap: 15px; text-align: center; }
-            .contenedor { flex-direction: column; align-items: center; } 
+            .contenedor { flex-direction: column; align-items: center; width: 100%; } 
             #seccion-cargar { width: 100%; display: none; position: static; } 
             #btn-toggle-cargar { display: block; } 
             .resumen-finanzas { flex-direction: column; }
+            
+            /* Ajustes para centrar boletas en celular */
+            #seccion-boleta { width: 100%; display: flex; flex-direction: column; align-items: center; overflow: hidden; padding-left: 0; padding-right: 0;}
+            #contenedor-boletas { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 40px; }
+            .contenedor-individual { width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .header-previa { justify-content: center; }
+        }
+
+        /* Escalar visualmente la boleta para que entre en pantallas chicas sin perder calidad al descargar */
+        @media (max-width: 450px) {
+            .ig-story {
+                transform: scale(0.85);
+                transform-origin: top center;
+                margin-bottom: -100px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .ig-story {
+                transform: scale(0.75);
+                transform-origin: top center;
+                margin-bottom: -180px;
+            }
         }
     </style>
 </head>
@@ -1592,12 +1619,9 @@
                 if (index !== -1) { 
                     let partidoViejo = baseDeDatos[tipoBoleta][index];
                     
-                    // Solo actualizamos el escudo si el usuario modificó el nombre del equipo.
-                    // Si dejó el mismo nombre, conservamos el escudo original (clave para no romper los de la API).
                     let nuevoEscudoLocal = (partidoViejo.local === localInput) ? partidoViejo.escudoLocal : `escudos/${normalizarNombre(localInput)}.png`;
                     let nuevoEscudoVisitante = (partidoViejo.visitante === visitanteInput) ? partidoViejo.escudoVisitante : `escudos/${normalizarNombre(visitanteInput)}.png`;
                     
-                    // Solo actualizamos el logo de la liga si el usuario modificó el nombre en el input de liga.
                     let nuevaLiga = partidoViejo.liga;
                     if (partidoViejo.ligaNombre !== ligaInput) {
                         nuevaLiga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
@@ -1761,7 +1785,7 @@
                                 </div>
                                 <div class="footer-boleta">@fandelprode</div>
                             </div>
-                            <div style="display: flex; gap: 8px;">
+                            <div style="display: flex; gap: 8px; width: 100%; max-width: 405px;">
                                 <button class="btn-descargar" onclick="descargarImagen('${boletaID}', '${tipo}')" style="flex: 1;">Descargar Boleta ${tipo}</button>
                                 <button class="btn-eliminar-boleta" onclick="borrarBoletaIndividual('${tipo}')" title="Eliminar todos los partidos de esta boleta">🗑️</button>
                             </div>
@@ -1774,12 +1798,23 @@
         function descargarImagen(idBoleta, nombreBoleta) {
             const elemento = document.getElementById(idBoleta);
             
-            html2canvas(elemento, { scale: 2, useCORS: true, backgroundColor: null }).then(canvas => {
+            // Guardamos el tamaño visual por si estamos en celular, lo forzamos a tamaño real y bajamos la foto.
+            const transformOriginal = elemento.style.transform;
+            elemento.style.transform = 'scale(1)';
+
+            html2canvas(elemento, { 
+                scale: 4, // <-- ESCALA 4 = CALIDAD HD/4K
+                useCORS: true, 
+                backgroundColor: null 
+            }).then(canvas => {
+                elemento.style.transform = transformOriginal; // Devolvemos todo a la normalidad
+                
                 const link = document.createElement('a'); 
                 link.download = `Prode_${nombreBoleta.toLowerCase()}.png`; 
-                link.href = canvas.toDataURL('image/png'); 
+                link.href = canvas.toDataURL('image/png', 1.0); 
                 link.click();
             }).catch(err => { 
+                elemento.style.transform = transformOriginal;
                 alert("Hubo un error al generar la imagen."); 
                 console.error(err); 
             });
