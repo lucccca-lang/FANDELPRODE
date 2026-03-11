@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fan del prode</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+
+        body { 
+            background-color: #121212; 
+            color: white; 
+            padding: 20px; 
+        }
+
+        .header-principal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto 30px auto;
+        }
+
+        .titulo-principal { 
+            font-size: 40px; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+        }
+
+        .btn-caja-header {
+            background-color: #27ae60;
+            width: auto;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-caja-header:hover {
+            background-color: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        .contenedor { 
+            display: flex; 
+            gap: 40px; 
+            align-items: flex-start; 
+            max-width: 1600px; 
+            margin: 0 auto; 
+        }
+
+        .seccion { 
+            background: #1e1e1e; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+        }
+
+        .seccion h2 { 
+            margin: 0; 
+            font-size: 22px; 
+            text-align: center; 
+            text-transform: uppercase; 
+        }
+
+        .header-previa { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid #333; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            gap: 10px; 
+        }
+
+        .btn-eliminar-todas { 
+            background: #ab2323; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        .btn-eliminar-todas:hover { 
+            background: #8a1c1c; 
+        }
+
+        #seccion-cargar { 
+            width: 380px; 
+            flex-shrink: 0; 
+            position: sticky; 
+            top: 20px; 
+        }
+
+        .formulario-grupo { 
+            margin-bottom: 15px; 
+        }
+
+        .formulario-grupo label { 
+            display: block; 
+            margin-bottom: 5px; 
+            font-size: 14px; 
+            color: #aaa; 
+            text-transform: uppercase; 
+        }
+
+        .formulario-grupo input, 
+        .formulario-grupo select { 
+            width: 100%; 
+            padding: 10px; 
+            border-radius: 5px; 
+            border: 1px solid #444; 
+            background: #2a2a2a; 
+            color: white; 
+        }
+
+        .panel-apuesta { 
+            background: #222; 
+            border: 1px solid #f1c40f; 
+            padding: 10px; 
+            border-radius: 8px; 
+            margin-bottom: 15px; 
+        }
+
+        .panel-apuesta label { 
+            color: #f1c40f; 
+            font-weight: bold; 
+        }
+
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background: #2a5298; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        button:hover { 
+            background: #1e3c72; 
+        }
+
+        .btn-peligro { 
+            background: #ab2323; 
+            margin-top: 10px; 
+        }
+
+        .btn-peligro:hover { 
+            background: #8a1c1c; 
+        }
+
+        #btn-cancelar { 
+            background: #555; 
+            width: auto; 
+            display: none; 
+            padding: 12px 15px; 
+        }
+
+        #btn-cancelar:hover { 
+            background: #777; 
+        }
+
+        .panel-api { 
+            background: #222; 
+            border: 1px solid #27ae60; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-bottom: 15px; 
+        }
+
+        .header-api {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            gap: 10px;
+        }
+
+        .header-api h3 { 
+            font-size: 14px; 
+            color: #2ecc71; 
+            text-transform: uppercase; 
+            margin: 0;
+        }
+
+        .controles-busqueda-api {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .controles-busqueda-api input {
+            padding: 8px 10px;
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .controles-busqueda-api input:focus {
+            border-color: #2ecc71;
+        }
+
+        #input-buscador-api {
+            flex: 1;
+        }
+
+        .filtros-api { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 5px; 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px dashed #444; 
+        }
+
+        .filtros-api label { 
+            background: #333; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            font-size: 11px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 4px; 
+            border: 1px solid #444; 
+            transition: 0.2s; 
+            user-select: none; 
+        }
+
+        .filtros-api label:hover { 
+            background: #444; 
+        }
+
+        .filtros-api input[type="checkbox"] { 
+            cursor: pointer; 
+            width: 12px; 
+            height: 12px; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        .lista-api { 
+            max-height: 250px; 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            padding-right: 5px; 
+        }
+
+        .lista-api::-webkit-scrollbar { 
+            width: 6px; 
+        }
+
+        .lista-api::-webkit-scrollbar-thumb { 
+            background: #555; 
+            border-radius: 3px; 
+        }
+
+        .item-api { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #333; 
+            padding: 8px 10px; 
+            border-radius: 5px; 
+            border-left: 3px solid; 
+            font-size: 13px; 
+        }
+
+        .item-api .info { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            line-height: 1.4; 
+        }
+
+        .item-api .info strong { 
+            color: white; 
+        }
+
+        .item-api .info small { 
+            color: #aaa; 
+            font-size: 11px; 
+        }
+
+        .item-api .btn-add { 
+            color: white; 
+            border: none; 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 4px; 
+            font-size: 20px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: 0.2s; 
+            padding: 0;
+        }
+
+        .item-api .btn-add:hover { 
+            filter: brightness(1.2); 
+            transform: scale(1.05); 
+        }
+
+        #lista-gestion { 
+            margin-top: 20px; 
+            max-height: 200px; 
+            overflow-y: auto; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
+
+        .item-gestion { 
+            display: flex; 
+            justify-content: space-between; 
+            background: #2a2a2a; 
+            padding: 8px 10px; 
+            border-radius: 5px; 
+            font-size: 14px; 
+            align-items: center; 
+            cursor: grab; 
+            border: 1px solid transparent; 
+            transition: 0.2s; 
+        }
+
+        .item-gestion:active { 
+            cursor: grabbing; 
+            border-color: #2a5298; 
+            opacity: 0.8; 
+        }
+
+        .item-gestion.drag-over { 
+            border-top: 3px solid #27ae60; 
+        }
+
+        .botones-control { 
+            display: flex; 
+            gap: 6px; 
+        }
+
+        .botones-control button { 
+            width: 28px; 
+            height: 28px; 
+            padding: 0; 
+            font-size: 14px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .btn-editar { 
+            background: #f39c12; 
+        }
+
+        .btn-editar:hover { 
+            background: #d68910; 
+        }
+
+        .btn-borrar { 
+            background: #ab2323; 
+        }
+
+        .btn-borrar:hover { 
+            background: #8a1c1c; 
+        }
+
+        #seccion-boleta { 
+            flex: 1; 
+        }
+
+        #contenedor-boletas { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 30px; 
+            justify-content: center; 
+        }
+
+        .contenedor-individual { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+
+        .btn-descargar { 
+            background-color: #27ae60; 
+        }
+
+        .btn-descargar:hover { 
+            background-color: #2ecc71; 
+        }
+
+        .btn-eliminar-boleta { 
+            background: #ab2323; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 18px; 
+            width: 45px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        .btn-eliminar-boleta:hover { 
+            background: #8a1c1c; 
+        }
+
+        .ig-story { 
+            width: 405px; 
+            height: 720px; 
+            border-radius: 20px; 
+            padding: 25px 20px; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            position: relative; 
+            overflow: hidden; 
+        }
+
+        .header-boleta { 
+            text-align: center; 
+            margin-bottom: calc(15px * var(--escala)); 
+        }
+
+        .header-boleta h3 { 
+            font-size: 32px; 
+            font-weight: 900; 
+            letter-spacing: 1px; 
+            color: #fff; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
+            margin-bottom: 2px;
+        }
+
+        .header-boleta p { 
+            font-size: 14px; 
+            font-weight: bold; 
+            background: rgba(255,255,255,0.2); 
+            display: inline-block; 
+            padding: 3px 15px; 
+            border-radius: 20px; 
+            text-transform: uppercase; 
+        }
+
+        .lista-partidos-boleta { 
+            display: flex; 
+            flex-direction: column; 
+            gap: calc(6px * var(--escala)); 
+            flex-grow: 1; 
+            justify-content: center; 
+        }
+
+        .partido { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(5px); 
+            border-radius: calc(10px * var(--escala)); 
+            padding: calc(6px * var(--escala)) calc(10px * var(--escala)); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border: calc(1px * var(--escala)) solid rgba(255,255,255,0.2); 
+            height: calc(72px * var(--escala)); 
+            overflow: hidden; 
+        }
+
+        .centro-opciones { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .logo-liga { 
+            height: calc(20px * var(--escala)); 
+            object-fit: contain; 
+            margin-bottom: calc(3px * var(--escala)); 
+            filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5)); 
+        }
+
+        .equipo { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            width: calc(100px * var(--escala)); 
+        }
+
+        .equipo img { 
+            width: calc(35px * var(--escala)); 
+            height: calc(35px * var(--escala)); 
+            object-fit: contain; 
+            margin-bottom: calc(3px * var(--escala)); 
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.5)); 
+        }
+
+        .equipo span { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
+            height: calc(24px * var(--escala)); 
+            font-size: calc(10px * var(--escala)); 
+            font-weight: bold; 
+            text-align: center; 
+            text-transform: uppercase; 
+            line-height: 1.1; 
+            word-break: normal; 
+            overflow-wrap: normal; 
+            hyphens: none; 
+        }
+
+        .opciones { 
+            display: flex; 
+            gap: calc(10px * var(--escala)); 
+        }
+
+        .circulo { 
+            width: calc(28px * var(--escala)); 
+            height: calc(28px * var(--escala)); 
+            border: calc(3px * var(--escala)) solid rgba(255,255,255,0.9); 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3); 
+        }
+
+        .banner-promo { 
+            background: #ffffff; 
+            color: #111111; 
+            text-align: center; 
+            padding: 10px; 
+            border-radius: 12px; 
+            font-size: 13px; 
+            font-weight: 900; 
+            margin-top: 10px; 
+            margin-bottom: 10px; 
+            line-height: 1.5; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
+            border: 3px solid rgba(255, 255, 255, 0.4); 
+        }
+
+        .banner-promo span { 
+            color: #d32f2f; 
+            font-size: 13px; 
+            font-weight: 900; 
+            background: #ffebee; 
+            padding: 1px 4px; 
+            border-radius: 4px; 
+            border: 1px solid #ffcdd2; 
+            display: inline-block; 
+            min-width: 35px; 
+            text-align: center; 
+            vertical-align: baseline; 
+            margin: 0 2px; 
+            line-height: 1; 
+        }
+
+        .footer-boleta { 
+            text-align: center; 
+            font-size: 16px; 
+            font-weight: bold; 
+            letter-spacing: 1px; 
+            margin-top: auto; 
+        }
+
+        /* =================================================== */
+        /* --- ESTILOS EXCLUSIVOS PARA BOLETA SOÑADORA --- */
+        /* =================================================== */
+        .boleta-sonadora .header-boleta { margin-bottom: calc(10px * var(--escala)); }
+        .boleta-sonadora .header-boleta h3 { font-size: 28px; }
+        .boleta-sonadora .lista-partidos-boleta { gap: calc(4px * var(--escala)); }
+        .boleta-sonadora .partido { height: calc(60px * var(--escala)); padding: calc(4px * var(--escala)) calc(8px * var(--escala)); border-radius: calc(8px * var(--escala)); }
+        .boleta-sonadora .logo-liga { height: calc(16px * var(--escala)); }
+        .boleta-sonadora .equipo img { width: calc(30px * var(--escala)); height: calc(30px * var(--escala)); }
+        .boleta-sonadora .equipo span { font-size: calc(9px * var(--escala)); height: calc(20px * var(--escala)); }
+        .boleta-sonadora .opciones { gap: calc(6px * var(--escala)); }
+        .boleta-sonadora .circulo { width: calc(22px * var(--escala)); height: calc(22px * var(--escala)); border-width: calc(2px * var(--escala)); }
+
+        /* =================================================== */
+        /* --- ESTILOS EXCLUSIVOS PARA BOLETA FÁCIL --- */
+        /* =================================================== */
+        .boleta-facil .header-boleta h3 { font-size: 38px; }
+        .boleta-facil .lista-partidos-boleta { gap: calc(15px * var(--escala)); justify-content: center; }
+        .boleta-facil .partido { height: calc(100px * var(--escala)); padding: calc(15px * var(--escala)) calc(15px * var(--escala)); border-radius: calc(15px * var(--escala)); }
+        .boleta-facil .logo-liga { height: calc(25px * var(--escala)); margin-bottom: calc(5px * var(--escala)); }
+        .boleta-facil .equipo img { width: calc(50px * var(--escala)); height: calc(50px * var(--escala)); margin-bottom: calc(5px * var(--escala)); }
+        .boleta-facil .equipo span { font-size: calc(14px * var(--escala)); height: calc(30px * var(--escala)); }
+        .boleta-facil .opciones { gap: calc(15px * var(--escala)); }
+        .boleta-facil .circulo { width: calc(35px * var(--escala)); height: calc(35px * var(--escala)); border-width: calc(4px * var(--escala)); }
+
+        #btn-toggle-cargar { 
+            display: none; 
+            margin-bottom: 20px; 
+        }
+
+        /* =================================================== */
+        /* --- ESTILOS DEL MODAL DE FINANZAS --- */
+        /* =================================================== */
+        .modal-fondo {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-contenido {
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #27ae60;
+        }
+
+        .btn-cerrar-modal {
+            background: transparent;
+            color: #aaa;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            width: auto;
+            padding: 0;
+        }
+
+        .btn-cerrar-modal:hover { color: white; background: transparent; }
+
+        .resumen-finanzas {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tarjeta-resumen {
+            flex: 1;
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #f1c40f;
+        }
+
+        .tarjeta-resumen h4 { margin: 0; color: #aaa; font-size: 12px; text-transform: uppercase; }
+        .tarjeta-resumen p { margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: white; }
+        .tarjeta-resumen.ganancia { border-left-color: #27ae60; }
+        .tarjeta-resumen.ganancia p { color: #2ecc71; }
+
+        .lista-finanzas {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-top: 1px dashed #444;
+            padding-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item-finanza {
+            background: #2a2a2a;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-finanza p { margin: 0; font-size: 14px; font-weight: bold; }
+        .info-finanza small { color: #aaa; font-size: 12px; }
+        .montos-finanza { text-align: right; margin-right: 15px; }
+        .montos-finanza span { display: block; font-size: 13px; }
+        .montos-finanza .ingreso { color: #f1c40f; }
+        .montos-finanza .ganancia { color: #2ecc71; font-weight: bold; }
+
+        @media (max-width: 900px) { 
+            .header-principal { flex-direction: column; gap: 15px; text-align: center; }
+            .contenedor { flex-direction: column; align-items: center; } 
+            #seccion-cargar { width: 100%; display: none; position: static; } 
+            #btn-toggle-cargar { display: block; } 
+            .resumen-finanzas { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-principal">
+        <h1 class="titulo-principal">FAN DEL PRODE</h1>
+        <button onclick="abrirCaja()" class="btn-caja-header">💰 GESTIÓN DE CAJA</button>
+    </div>
+
+    <button id="btn-toggle-cargar">HABILITAR SECCIÓN CARGAR</button>
+
+    <div class="contenedor">
+        
+        <section id="seccion-cargar" class="seccion">
+            <h2 style="border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">SECCIÓN CARGAR</h2>
+            
+            <div class="formulario-grupo">
+                <label>Tipo de Boleta</label>
+                <select id="input-tipo-boleta" onchange="cambiarBoleta()">
+                    <option value="DIARIA">Diaria</option>
+                    <option value="GRANDE">Grande</option>
+                    <option value="CHICA">Chica</option>
+                    <option value="SOÑADORA">Soñadora</option>
+                    <option value="FÁCIL">Fácil</option>
+                    <option value="FÚTBOL">Especial Fútbol</option>
+                    <option value="BÁSQUET">Especial Básquet</option>
+                    <option value="TENIS">Especial Tenis</option>
+                </select>
+            </div>
+
+            <div class="panel-apuesta">
+                <div style="display: flex; gap: 10px;">
+                    <div class="formulario-grupo" style="margin-bottom: 0; flex: 1;">
+                        <label style="font-size: 11px;">Multiplicador (Solo el N°)</label>
+                        <input type="text" id="input-multiplicador" placeholder="10" oninput="guardarConfiguracion()">
+                    </div>
+                    <div class="formulario-grupo" style="margin-bottom: 0; flex: 1;">
+                        <label style="font-size: 11px;">Mínimo (Solo el N°)</label>
+                        <input type="text" id="input-minimo" placeholder="1000" oninput="guardarConfiguracion()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-api">
+                <div class="header-api">
+                    <h3>PARTIDOS DE LA FECHA</h3>
+                </div>
+                
+                <div class="controles-busqueda-api" style="margin-bottom: 10px;">
+                    <input type="text" id="input-buscador-api" placeholder="🔍 Buscar equipo..." onkeyup="renderizarVidriera()">
+                    <input type="date" id="input-fecha-api" onchange="cargarVidrieraReal()">
+                </div>
+                
+                <div class="filtros-api">
+                    <label style="border-color: #3498db; color: #3498db;"><input type="checkbox" id="filtro-5-ligas"> 🌍 5 Ligas Top</label>
+                    <label><input type="checkbox" class="filtro-liga" value="f_128" checked> 🇦🇷 LPF Arg</label>
+                    <label><input type="checkbox" class="filtro-liga" value="f_1032" checked> Copa Arg</label>
+                    <label><input type="checkbox" class="filtro-liga" value="f_13" checked> Libertadores</label>
+                    <label><input type="checkbox" class="filtro-liga" value="f_2" checked> Champions</label>
+                    <label><input type="checkbox" class="filtro-liga" value="b_12" checked> 🏀 NBA</label>
+                    <label style="border-color: #27ae60; color: #2ecc71;"><input type="checkbox" id="filtro-todas-futbol"> ⚽ TODO Fútbol</label>
+                    <label style="border-color: #e67e22; color: #f39c12;"><input type="checkbox" id="filtro-todo-basket"> 🏀 TODO Básquet</label>
+                </div>
+
+                <div class="lista-api" id="contenedor-partidos-api">
+                    </div>
+            </div>
+
+            <div style="border-top: 1px dashed #555; margin-bottom: 15px; padding-top: 15px;">
+                <label style="color:#aaa; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: block;">O CARGAR MANUALMENTE:</label>
+                
+                <div class="formulario-grupo">
+                    <label>Círculos de Opciones</label>
+                    <select id="input-circulos">
+                        <option value="3">3 Círculos (Ej: Local / Empate / Visita)</option>
+                        <option value="2">2 Círculos (Ej: Local / Visita)</option>
+                    </select>
+                </div>
+
+                <div class="formulario-grupo">
+                    <input type="text" id="input-liga" placeholder="Liga (Ej: champions)">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="formulario-grupo" style="flex: 1;">
+                        <input type="text" id="input-local" placeholder="Local">
+                    </div>
+                    <div class="formulario-grupo" style="flex: 1;">
+                        <input type="text" id="input-visitante" placeholder="Visitante">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-agregar" onclick="guardarPartido()" style="flex: 1;">AGREGAR MANUAL</button>
+                    <button id="btn-cancelar" onclick="cancelarEdicion()" title="Cancelar Edición">❌</button>
+                </div>
+            </div>
+
+            <div id="lista-gestion"></div>
+            
+            <button class="btn-peligro" onclick="borrarBoletaActual()">LIMPIAR ESTA BOLETA</button>
+        </section>
+
+        <section id="seccion-boleta" class="seccion">
+            <div class="header-previa">
+                <h2>VISTA PREVIA DE BOLETAS</h2>
+                <button class="btn-eliminar-todas" onclick="borrarTodas()">🗑️ ELIMINAR TODAS LAS BOLETAS</button>
+            </div>
+            
+            <div id="contenedor-boletas"></div>
+        </section>
+
+    </div>
+
+    <div id="modal-finanzas" class="modal-fondo">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h2>💰 GESTIÓN DE CAJA</h2>
+                <button class="btn-cerrar-modal" onclick="cerrarCaja()">✖</button>
+            </div>
+
+            <div class="resumen-finanzas">
+                <div class="tarjeta-resumen">
+                    <h4>TOTAL INGRESADO (APUESTAS)</h4>
+                    <p id="txt-total-ingreso">$0</p>
+                </div>
+                <div class="tarjeta-resumen ganancia">
+                    <h4>MI GANANCIA NETA</h4>
+                    <p id="txt-total-ganancia">$0</p>
+                </div>
+            </div>
+
+            <div id="contenedor-resumen-mensual" style="margin-bottom: 20px; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; display: none;">
+                </div>
+
+            <div style="background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444;">
+                <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 14px; color: #aaa;">NUEVO INGRESO</h4>
+                <div class="formulario-grupo">
+                    <input type="text" id="caja-nombre" placeholder="Concepto / Nombre (Ej: Juan Perez - Boleta Fácil)">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="formulario-grupo" style="flex: 1; margin-bottom: 0;">
+                        <input type="number" id="caja-ingreso" placeholder="Plata Apostada ($)">
+                    </div>
+                    <div class="formulario-grupo" style="flex: 1; margin-bottom: 0;">
+                        <input type="number" id="caja-ganancia" placeholder="Mi Ganancia ($) (Opcional)">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button id="btn-guardar-caja" onclick="guardarRegistroCaja()" style="background: #27ae60; flex: 1;">AGREGAR A LA CAJA</button>
+                    <button id="btn-cancelar-caja" onclick="cancelarEdicionCaja()" style="background: #555; display: none;" title="Cancelar">❌</button>
+                </div>
+            </div>
+
+            <div class="lista-finanzas" id="contenedor-lista-finanzas">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'b2c65af1376c1ff6e3e2e781e45f1331'; 
+
+        const tiposPermitidos = [
+            'DIARIA', 
+            'GRANDE', 
+            'CHICA', 
+            'SOÑADORA', 
+            'FÁCIL',
+            'FÚTBOL', 
+            'BÁSQUET', 
+            'TENIS'
+        ];
+
+        const limitesBoletas = {
+            'FÁCIL': 4,
+            'CHICA': 5,
+            'DIARIA': 8,
+            'GRANDE': 12,
+            'SOÑADORA': 16,
+            'FÚTBOL': 10,
+            'BÁSQUET': 10,
+            'TENIS': 10
+        };
+
+        let guardadoDatos = JSON.parse(localStorage.getItem('fandelprode_datos')) || {};
+        let baseDeDatos = {};
+        
+        tiposPermitidos.forEach(t => { 
+            baseDeDatos[t] = guardadoDatos[t] || []; 
+        });
+
+        let guardadoConfig = JSON.parse(localStorage.getItem('fandelprode_config')) || {};
+        let configBoletas = {};
+        
+        const configDefault = {
+            'DIARIA': { mult: '10', min: '1000' }, 
+            'GRANDE': { mult: '20', min: '2000' },
+            'CHICA': { mult: '5', min: '500' }, 
+            'SOÑADORA': { mult: '50', min: '1000' },
+            'FÁCIL': { mult: '3', min: '500' },
+            'FÚTBOL': { mult: '10', min: '1000' }, 
+            'BÁSQUET': { mult: '10', min: '1000' }, 
+            'TENIS': { mult: '10', min: '1000' }
+        };
+        
+        tiposPermitidos.forEach(t => { 
+            configBoletas[t] = guardadoConfig[t] || configDefault[t]; 
+        });
+
+        const coloresBoleta = { 
+            'DIARIA': '#1e3c72', 
+            'GRANDE': '#b20a2c', 
+            'CHICA': '#11998e', 
+            'SOÑADORA': '#9c27b0', 
+            'FÁCIL': '#f39c12',
+            'FÚTBOL': '#6a1b9a', 
+            'BÁSQUET': '#e65100', 
+            'TENIS': '#2b5876' 
+        };
+
+        let idEditando = null;
+
+        // ==========================================
+        // SISTEMA DE FINANZAS / CAJA
+        // ==========================================
+        let baseDeFinanzas = JSON.parse(localStorage.getItem('fandelprode_finanzas')) || [];
+        let idEditandoFinanza = null;
+
+        function abrirCaja() {
+            document.getElementById('modal-finanzas').style.display = 'flex';
+            renderizarFinanzas();
+        }
+
+        function cerrarCaja() {
+            document.getElementById('modal-finanzas').style.display = 'none';
+            cancelarEdicionCaja();
+        }
+
+        function guardarRegistroCaja() {
+            const nombre = document.getElementById('caja-nombre').value;
+            const ingreso = parseFloat(document.getElementById('caja-ingreso').value);
+            const gananciaInput = document.getElementById('caja-ganancia').value;
+            const ganancia = gananciaInput === '' ? null : parseFloat(gananciaInput);
+
+            if (!nombre || isNaN(ingreso)) {
+                alert("Por favor completá al menos el nombre y la plata apostada.");
+                return;
+            }
+
+            if (idEditandoFinanza) {
+                let index = baseDeFinanzas.findIndex(f => f.id === idEditandoFinanza);
+                if (index !== -1) {
+                    baseDeFinanzas[index].nombre = nombre;
+                    baseDeFinanzas[index].ingreso = ingreso;
+                    baseDeFinanzas[index].ganancia = ganancia;
+                }
+                cancelarEdicionCaja();
+            } else {
+                const fechaActual = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                baseDeFinanzas.unshift({
+                    id: Date.now(),
+                    fecha: fechaActual,
+                    nombre: nombre,
+                    ingreso: ingreso,
+                    ganancia: ganancia
+                });
+                
+                document.getElementById('caja-nombre').value = '';
+                document.getElementById('caja-ingreso').value = '';
+                document.getElementById('caja-ganancia').value = '';
+            }
+
+            localStorage.setItem('fandelprode_finanzas', JSON.stringify(baseDeFinanzas));
+            renderizarFinanzas();
+        }
+
+        function editarFinanza(id) {
+            const registro = baseDeFinanzas.find(f => f.id === id);
+            if (!registro) return;
+            
+            document.getElementById('caja-nombre').value = registro.nombre;
+            document.getElementById('caja-ingreso').value = registro.ingreso;
+            document.getElementById('caja-ganancia').value = registro.ganancia !== null ? registro.ganancia : '';
+            
+            idEditandoFinanza = id;
+            document.getElementById('btn-guardar-caja').innerText = 'GUARDAR CAMBIOS';
+            document.getElementById('btn-guardar-caja').style.background = '#f39c12';
+            document.getElementById('btn-cancelar-caja').style.display = 'block';
+        }
+
+        function cancelarEdicionCaja() {
+            idEditandoFinanza = null;
+            document.getElementById('caja-nombre').value = '';
+            document.getElementById('caja-ingreso').value = '';
+            document.getElementById('caja-ganancia').value = '';
+            document.getElementById('btn-guardar-caja').innerText = 'AGREGAR A LA CAJA';
+            document.getElementById('btn-guardar-caja').style.background = '#27ae60';
+            document.getElementById('btn-cancelar-caja').style.display = 'none';
+        }
+
+        function borrarFinanza(id) {
+            if(confirm("¿Seguro que querés borrar este registro de la caja?")) {
+                baseDeFinanzas = baseDeFinanzas.filter(f => f.id !== id);
+                localStorage.setItem('fandelprode_finanzas', JSON.stringify(baseDeFinanzas));
+                if (idEditandoFinanza === id) cancelarEdicionCaja();
+                renderizarFinanzas();
+            }
+        }
+
+        function renderizarFinanzas() {
+            const contenedor = document.getElementById('contenedor-lista-finanzas');
+            const contenedorMensual = document.getElementById('contenedor-resumen-mensual');
+            
+            let totalIngreso = 0;
+            let totalGanancia = 0;
+            let resumenPorMes = {};
+            
+            contenedor.innerHTML = '';
+
+            if (baseDeFinanzas.length === 0) {
+                contenedor.innerHTML = '<p style="text-align: center; color: #aaa; margin-top: 10px;">No hay registros en la caja todavía.</p>';
+                contenedorMensual.style.display = 'none';
+            } else {
+                contenedorMensual.style.display = 'block';
+                baseDeFinanzas.forEach(f => {
+                    totalIngreso += f.ingreso;
+                    let gananciaReal = f.ganancia !== null ? f.ganancia : 0;
+                    totalGanancia += gananciaReal;
+                    
+                    // Extraer mes/año de "dd/mm/yyyy, hh:mm"
+                    let partes = f.fecha.split(',')[0].split('/');
+                    let mesAnio = partes.length === 3 ? `${partes[1]}/${partes[2]}` : 'Desconocido';
+                    
+                    if (!resumenPorMes[mesAnio]) {
+                        resumenPorMes[mesAnio] = { ingreso: 0, ganancia: 0 };
+                    }
+                    resumenPorMes[mesAnio].ingreso += f.ingreso;
+                    resumenPorMes[mesAnio].ganancia += gananciaReal;
+
+                    let txtGanancia = f.ganancia !== null ? `Ganaste: $${f.ganancia.toLocaleString('es-AR')}` : `<span style="color:#e67e22;">Ganancia Pendiente</span>`;
+
+                    contenedor.innerHTML += `
+                        <div class="item-finanza">
+                            <div class="info-finanza">
+                                <p>${f.nombre}</p>
+                                <small>${f.fecha}</small>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="montos-finanza">
+                                    <span class="ingreso">Apostó: $${f.ingreso.toLocaleString('es-AR')}</span>
+                                    <span class="ganancia">${txtGanancia}</span>
+                                </div>
+                                <div style="display: flex; gap: 5px;">
+                                    <button onclick="editarFinanza(${f.id})" style="background: #f39c12; width: 30px; height: 30px; padding: 0; border-radius: 5px; font-size: 14px;" title="Editar">✏️</button>
+                                    <button onclick="borrarFinanza(${f.id})" style="background: #ab2323; width: 30px; height: 30px; padding: 0; border-radius: 5px; font-size: 14px;" title="Borrar">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('txt-total-ingreso').innerText = `$${totalIngreso.toLocaleString('es-AR')}`;
+            document.getElementById('txt-total-ganancia').innerText = `$${totalGanancia.toLocaleString('es-AR')}`;
+            
+            if (Object.keys(resumenPorMes).length > 0) {
+                let htmlMensual = '<h4 style="margin-top: 0; margin-bottom: 10px; font-size: 14px; color: #3498db; text-transform: uppercase;">📊 RESUMEN POR MES</h4>';
+                htmlMensual += '<div style="display: flex; flex-direction: column; gap: 8px;">';
+                
+                const nombresMeses = {"01":"Enero", "02":"Febrero", "03":"Marzo", "04":"Abril", "05":"Mayo", "06":"Junio", "07":"Julio", "08":"Agosto", "09":"Septiembre", "10":"Octubre", "11":"Noviembre", "12":"Diciembre"};
+                
+                for (let mes in resumenPorMes) {
+                    let [m, y] = mes.split('/');
+                    let nombreMes = nombresMeses[m] ? `${nombresMeses[m]} ${y}` : mes;
+                    
+                    htmlMensual += `
+                        <div style="display: flex; justify-content: space-between; background: #333; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
+                            <strong>${nombreMes}</strong>
+                            <span style="color: #2ecc71; font-weight: bold;">Ganancia: $${resumenPorMes[mes].ganancia.toLocaleString('es-AR')}</span>
+                        </div>
+                    `;
+                }
+                htmlMensual += '</div>';
+                contenedorMensual.innerHTML = htmlMensual;
+            }
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById('modal-finanzas');
+            if (event.target === modal) {
+                cerrarCaja();
+            }
+        }
+
+
+        // ==========================================
+        // SISTEMA PRINCIPAL (PRODE)
+        // ==========================================
+
+        function puedeAgregar(tipo) {
+            if (baseDeDatos[tipo].length >= limitesBoletas[tipo]) {
+                alert(`¡Límite alcanzado! La boleta ${tipo} permite un máximo de ${limitesBoletas[tipo]} partidos para mantener el diseño perfecto.`);
+                return false;
+            }
+            return true;
+        }
+
+        let partidosDelDia = []; 
+        const inputFechaApi = document.getElementById('input-fecha-api');
+
+        const hoyGlobal = new Date();
+        const yyyy = hoyGlobal.getFullYear();
+        const mm = String(hoyGlobal.getMonth() + 1).padStart(2, '0');
+        const dd = String(hoyGlobal.getDate()).padStart(2, '0');
+        inputFechaApi.value = `${yyyy}-${mm}-${dd}`;
+
+        async function cargarVidrieraReal() {
+            const contenedor = document.getElementById('contenedor-partidos-api');
+            contenedor.innerHTML = '<p style="color: #aaa; text-align: center; padding: 10px;">Buscando partidos...</p>';
+
+            const fechaSeleccionada = inputFechaApi.value;
+            if (!fechaSeleccionada) {
+                contenedor.innerHTML = '<p style="color: #ab2323; text-align: center; margin-top: 10px;">Seleccioná una fecha.</p>';
+                return;
+            }
+
+            try {
+                const reqFutbol = fetch(`https://v3.football.api-sports.io/fixtures?date=${fechaSeleccionada}&timezone=America/Argentina/Buenos_Aires`, { headers: { 'x-apisports-key': API_KEY } }).then(r => r.json()).catch(() => null);
+                const reqBasket = fetch(`https://v1.basketball.api-sports.io/games?date=${fechaSeleccionada}&timezone=America/Argentina/Buenos_Aires`, { headers: { 'x-apisports-key': API_KEY } }).then(r => r.json()).catch(() => null);
+                
+                const [datosFutbol, datosBasket] = await Promise.all([reqFutbol, reqBasket]);
+
+                partidosDelDia = [];
+
+                if (datosFutbol && datosFutbol.response) {
+                    datosFutbol.response.forEach(p => {
+                        partidosDelDia.push({
+                            deporte: 'futbol',
+                            ligaId: `f_${p.league.id}`,
+                            ligaNombre: p.league.name,
+                            local: p.teams.home.name,
+                            visitante: p.teams.away.name,
+                            fechaRAW: p.fixture.date,
+                            logoLiga: p.league.logo || '',
+                            logoLocal: p.teams.home.logo || '',
+                            logoVisitante: p.teams.away.logo || ''
+                        });
+                    });
+                }
+
+                if (datosBasket && datosBasket.response) {
+                    datosBasket.response.forEach(p => {
+                        partidosDelDia.push({
+                            deporte: 'basket',
+                            ligaId: `b_${p.league.id}`,
+                            ligaNombre: p.league.name,
+                            local: p.teams.home.name,
+                            visitante: p.teams.away.name,
+                            fechaRAW: p.date || p.timestamp || '', 
+                            logoLiga: p.league.logo || '',
+                            logoLocal: p.teams.home.logo || '',
+                            logoVisitante: p.teams.away.logo || ''
+                        });
+                    });
+                }
+
+                if (partidosDelDia.length === 0) {
+                    contenedor.innerHTML = '<p style="color: #aaa; text-align: center; margin-top: 10px;">No hay partidos programados para esta fecha.</p>';
+                    return;
+                }
+
+                renderizarVidriera();
+
+            } catch (error) {
+                contenedor.innerHTML = '<p style="color: #ab2323; text-align: center; margin-top: 10px; font-size: 12px;">Sin conexión o error en la base de datos.</p>';
+            }
+        }
+
+        function renderizarVidriera() {
+            const contenedor = document.getElementById('contenedor-partidos-api');
+            if (partidosDelDia.length === 0) return;
+
+            const textoBuscado = document.getElementById('input-buscador-api').value.toLowerCase();
+            
+            const todoFutbol = document.getElementById('filtro-todas-futbol').checked;
+            const todoBasket = document.getElementById('filtro-todo-basket').checked;
+            const filtro5Ligas = document.getElementById('filtro-5-ligas').checked;
+            const ligasSeleccionadas = Array.from(document.querySelectorAll('.filtro-liga')).filter(cb => cb.checked).map(cb => cb.value);
+
+            const cincoLigasIDs = ['f_39', 'f_140', 'f_135', 'f_78', 'f_61'];
+
+            let partidosFiltrados = partidosDelDia.filter(p => {
+                if (textoBuscado !== '') {
+                    const textoLocal = p.local ? p.local.toLowerCase() : '';
+                    const textoVisita = p.visitante ? p.visitante.toLowerCase() : '';
+                    if (!textoLocal.includes(textoBuscado) && !textoVisita.includes(textoBuscado)) {
+                        return false;
+                    }
+                }
+
+                if (todoFutbol && p.deporte === 'futbol') return true;
+                if (todoBasket && p.deporte === 'basket') return true;
+                if (filtro5Ligas && cincoLigasIDs.includes(p.ligaId)) return true;
+                if (ligasSeleccionadas.includes(p.ligaId)) return true;
+                
+                return false;
+            });
+
+            contenedor.innerHTML = '';
+
+            if (partidosFiltrados.length === 0) {
+                contenedor.innerHTML = '<p style="color: #aaa; text-align: center; margin-top: 10px; font-size: 12px;">No se encontraron partidos con esos filtros o nombre.</p>';
+                return;
+            }
+
+            const limitePartidos = partidosFiltrados.slice(0, 80);
+
+            limitePartidos.forEach(p => {
+                let hora = "Hora a conf.";
+                if (p.fechaRAW) {
+                    const fechaObj = new Date(p.fechaRAW);
+                    if (!isNaN(fechaObj.getTime())) {
+                        hora = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+                    }
+                }
+
+                let iconoDeporte = '⚽';
+                let colorBorde = '#27ae60';
+                
+                if (p.deporte === 'basket') { iconoDeporte = '🏀'; colorBorde = '#e67e22'; }
+
+                const localSafe = p.local ? p.local.replace(/'/g, "\\'") : 'Local';
+                const visitanteSafe = p.visitante ? p.visitante.replace(/'/g, "\\'") : 'Visitante';
+                const ligaSafe = p.ligaNombre ? p.ligaNombre.replace(/'/g, "\\'") : 'Liga';
+
+                contenedor.innerHTML += `
+                    <div class="item-api" style="border-left-color: ${colorBorde};">
+                        <div class="info">
+                            <strong>${localSafe} vs ${visitanteSafe}</strong>
+                            <small>🕒 ${hora} | ${iconoDeporte} ${ligaSafe}</small>
+                        </div>
+                        <button class="btn-add" style="background: ${colorBorde};" onclick="agregarDesdeAPI('${p.deporte}', '${ligaSafe}', '${localSafe}', '${visitanteSafe}', '${p.logoLiga}', '${p.logoLocal}', '${p.logoVisitante}')" title="Agregar a la boleta">+</button>
+                    </div>
+                `;
+            });
+        }
+
+        document.querySelectorAll('.filtros-api input').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                if (checkbox.id === 'filtro-todas-futbol' && checkbox.checked) {
+                    document.querySelectorAll('.filtro-liga[value^="f_"]').forEach(cb => cb.checked = false);
+                    document.getElementById('filtro-5-ligas').checked = false;
+                }
+                if (checkbox.id === 'filtro-todo-basket' && checkbox.checked) {
+                    document.querySelectorAll('.filtro-liga[value^="b_"]').forEach(cb => cb.checked = false);
+                }
+                if (checkbox.id === 'filtro-5-ligas' && checkbox.checked) {
+                    document.getElementById('filtro-todas-futbol').checked = false;
+                }
+                if (checkbox.classList.contains('filtro-liga') && checkbox.checked) {
+                    if (checkbox.value.startsWith('f_')) {
+                        document.getElementById('filtro-todas-futbol').checked = false;
+                    }
+                    if (checkbox.value.startsWith('b_')) {
+                        document.getElementById('filtro-todo-basket').checked = false;
+                    }
+                }
+                renderizarVidriera();
+            });
+        });
+
+        function agregarDesdeAPI(deporteAPI, liga, local, visitante, logoLigaAPI, logoLocalAPI, logoVisitanteAPI) {
+            const tipoBoleta = document.getElementById('input-tipo-boleta').value;
+            
+            if (!puedeAgregar(tipoBoleta)) return;
+
+            const cantCirculos = (deporteAPI === 'basket') ? 2 : 3;
+            const ligaRuta = logoLigaAPI ? logoLigaAPI : (liga ? `ligas/${normalizarNombre(liga)}.png` : '');
+            const escudoLocal = logoLocalAPI ? logoLocalAPI : `escudos/${normalizarNombre(local)}.png`;
+            const escudoVisitante = logoVisitanteAPI ? logoVisitanteAPI : `escudos/${normalizarNombre(visitante)}.png`;
+
+            baseDeDatos[tipoBoleta].push({ 
+                id: Date.now(), 
+                circulos: cantCirculos, 
+                liga: ligaRuta, 
+                ligaNombre: liga, 
+                local: local, 
+                escudoLocal: escudoLocal, 
+                visitante: visitante, 
+                escudoVisitante: escudoVisitante 
+            });
+
+            guardarEnMemoria();
+            actualizarInterfaz();
+        }
+
+        cargarVidrieraReal();
+
+        const btnToggle = document.getElementById('btn-toggle-cargar');
+        const seccionCargar = document.getElementById('seccion-cargar');
+        
+        btnToggle.addEventListener('click', () => {
+            if (seccionCargar.style.display === 'none' || seccionCargar.style.display === '') {
+                seccionCargar.style.display = 'block'; 
+                btnToggle.innerText = 'OCULTAR SECCIÓN CARGAR';
+            } else { 
+                seccionCargar.style.display = 'none'; 
+                btnToggle.innerText = 'HABILITAR SECCIÓN CARGAR'; 
+            }
+        });
+
+        function normalizarNombre(nombre) { 
+            return nombre.toLowerCase().replace(/\s+/g, ''); 
+        }
+
+        function guardarEnMemoria() { 
+            localStorage.setItem('fandelprode_datos', JSON.stringify(baseDeDatos)); 
+        }
+
+        function borrarTodas() {
+            if(confirm('⚠️ ¿Estás completamente seguro de que querés borrar TODOS los partidos de TODAS las boletas?')) {
+                tiposPermitidos.forEach(t => { 
+                    baseDeDatos[t] = []; 
+                });
+                guardarEnMemoria(); 
+                actualizarInterfaz();
+            }
+        }
+
+        function borrarBoletaIndividual(tipo) {
+            if(confirm(`¿Estás seguro de que querés borrar todos los partidos de la boleta ${tipo}?`)) {
+                baseDeDatos[tipo] = []; 
+                guardarEnMemoria(); 
+                actualizarInterfaz();
+            }
+        }
+
+        function borrarBoletaActual() {
+            const tipo = document.getElementById('input-tipo-boleta').value;
+            borrarBoletaIndividual(tipo);
+        }
+
+        function guardarConfiguracion() {
+            const tipo = document.getElementById('input-tipo-boleta').value;
+            configBoletas[tipo] = { 
+                mult: document.getElementById('input-multiplicador').value, 
+                min: document.getElementById('input-minimo').value 
+            };
+            localStorage.setItem('fandelprode_config', JSON.stringify(configBoletas)); 
+            actualizarInterfaz();
+        }
+
+        function cambiarBoleta() {
+            cancelarEdicion();
+            const tipo = document.getElementById('input-tipo-boleta').value;
+            
+            let multLimpio = (configBoletas[tipo]?.mult || '').replace(/^x/i, '');
+            let minLimpio = (configBoletas[tipo]?.min || '').replace(/^\$/, '');
+            
+            document.getElementById('input-multiplicador').value = multLimpio;
+            document.getElementById('input-minimo').value = minLimpio;
+            
+            actualizarInterfaz();
+        }
+
+        function editarPartido(id, tipoBoleta) {
+            const partido = baseDeDatos[tipoBoleta].find(p => p.id === id);
+            
+            if(!partido) return;
+            
+            let circulosPrevios = partido.circulos !== undefined ? partido.circulos : (partido.deporte === 'basket' || partido.deporte === 'tenis' ? 2 : 3);
+            document.getElementById('input-circulos').value = circulosPrevios.toString();
+            
+            let ligaRaw = partido.ligaNombre !== undefined ? partido.ligaNombre : (partido.liga ? partido.liga.replace('ligas/','').replace('.png','') : '');
+            document.getElementById('input-liga').value = ligaRaw;
+            
+            document.getElementById('input-local').value = partido.local;
+            document.getElementById('input-visitante').value = partido.visitante;
+            
+            idEditando = id;
+            
+            const btnAgregar = document.getElementById('btn-agregar');
+            btnAgregar.innerText = 'GUARDAR CAMBIOS'; 
+            btnAgregar.style.background = '#f39c12'; 
+            
+            document.getElementById('btn-cancelar').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function cancelarEdicion() {
+            idEditando = null;
+            
+            const btnAgregar = document.getElementById('btn-agregar');
+            btnAgregar.innerText = 'AGREGAR MANUAL'; 
+            btnAgregar.style.background = '#2a5298'; 
+            
+            document.getElementById('btn-cancelar').style.display = 'none';
+            document.getElementById('input-liga').value = ''; 
+            document.getElementById('input-local').value = ''; 
+            document.getElementById('input-visitante').value = '';
+        }
+
+        function guardarPartido() {
+            const tipoBoleta = document.getElementById('input-tipo-boleta').value;
+            
+            if (!idEditando) {
+                if (!puedeAgregar(tipoBoleta)) return;
+            }
+
+            const cantCirculos = parseInt(document.getElementById('input-circulos').value);
+            const ligaInput = document.getElementById('input-liga').value;
+            const localInput = document.getElementById('input-local').value;
+            const visitanteInput = document.getElementById('input-visitante').value;
+
+            if (!localInput || !visitanteInput) { 
+                alert("Por favor, ingresá al menos los nombres de los equipos."); 
+                return; 
+            }
+
+            const liga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
+            const escudoLocal = `escudos/${normalizarNombre(localInput)}.png`;
+            const escudoVisitante = `escudos/${normalizarNombre(visitanteInput)}.png`;
+
+            if (idEditando) {
+                let index = baseDeDatos[tipoBoleta].findIndex(p => p.id === idEditando);
+                if (index !== -1) { 
+                    baseDeDatos[tipoBoleta][index] = { 
+                        ...baseDeDatos[tipoBoleta][index], 
+                        circulos: cantCirculos, 
+                        liga, 
+                        ligaNombre: ligaInput, 
+                        local: localInput, 
+                        escudoLocal, 
+                        visitante: visitanteInput, 
+                        escudoVisitante 
+                    }; 
+                }
+                cancelarEdicion(); 
+            } else {
+                baseDeDatos[tipoBoleta].push({ 
+                    id: Date.now(), 
+                    circulos: cantCirculos, 
+                    liga, 
+                    ligaNombre: ligaInput, 
+                    local: localInput, 
+                    escudoLocal, 
+                    visitante: visitanteInput, 
+                    escudoVisitante 
+                });
+                document.getElementById('input-liga').value = ''; 
+                document.getElementById('input-local').value = ''; 
+                document.getElementById('input-visitante').value = '';
+            }
+            
+            guardarEnMemoria(); 
+            actualizarInterfaz();
+        }
+
+        function eliminarPartido(id, tipoBoleta) { 
+            baseDeDatos[tipoBoleta] = baseDeDatos[tipoBoleta].filter(p => p.id !== id); 
+            guardarEnMemoria(); 
+            actualizarInterfaz(); 
+        }
+
+        let indiceArrastrado = null;
+        
+        function iniciarArrastre(evento, indice) { 
+            indiceArrastrado = indice; 
+            evento.dataTransfer.effectAllowed = 'move'; 
+        }
+        
+        function sobreArrastre(evento) { 
+            evento.preventDefault(); 
+            evento.target.closest('.item-gestion').classList.add('drag-over'); 
+        }
+        
+        function salirArrastre(evento) { 
+            evento.target.closest('.item-gestion').classList.remove('drag-over'); 
+        }
+        
+        function soltarElemento(evento, indiceDestino, tipoBoleta) {
+            evento.preventDefault(); 
+            evento.target.closest('.item-gestion').classList.remove('drag-over');
+            
+            if (indiceArrastrado === null || indiceArrastrado === indiceDestino) return;
+            
+            let partidoMovido = baseDeDatos[tipoBoleta].splice(indiceArrastrado, 1)[0];
+            baseDeDatos[tipoBoleta].splice(indiceDestino, 0, partidoMovido);
+            
+            guardarEnMemoria(); 
+            actualizarInterfaz(); 
+            indiceArrastrado = null;
+        }
+
+        function actualizarInterfaz() {
+            const contenedorBoletas = document.getElementById('contenedor-boletas');
+            const listaGestion = document.getElementById('lista-gestion');
+            const tipoActivoSelect = document.getElementById('input-tipo-boleta').value;
+            
+            contenedorBoletas.innerHTML = ''; 
+            listaGestion.innerHTML = '';
+
+            baseDeDatos[tipoActivoSelect].forEach((partido, index) => {
+                listaGestion.innerHTML += `
+                    <div class="item-gestion" draggable="true" ondragstart="iniciarArrastre(event, ${index})" ondragover="sobreArrastre(event)" ondragleave="salirArrastre(event)" ondrop="soltarElemento(event, ${index}, '${tipoActivoSelect}')">
+                        <span style="flex-grow: 1; pointer-events: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px;">≡ ${partido.local} vs ${partido.visitante}</span>
+                        <div class="botones-control">
+                            <button class="btn-editar" onclick="editarPartido(${partido.id}, '${tipoActivoSelect}')" title="Editar">✏️</button>
+                            <button class="btn-borrar" onclick="eliminarPartido(${partido.id}, '${tipoActivoSelect}')" title="Borrar">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            Object.keys(baseDeDatos).forEach(tipo => {
+                const partidos = baseDeDatos[tipo];
+                
+                if (partidos.length > 0 || tipo === tipoActivoSelect) {
+                    let escala = 1;
+                    
+                    if (tipo === 'SOÑADORA') { 
+                        if (partidos.length > 8) { escala = 8 / partidos.length; } 
+                    } else if (tipo === 'FÁCIL') {
+                        escala = 1;
+                    } else { 
+                        if (partidos.length > 6) { escala = 6 / partidos.length; } 
+                    }
+
+                    let partidosHTML = '';
+                    
+                    partidos.forEach(partido => {
+                        let cantCirculos = partido.circulos !== undefined ? partido.circulos : (partido.deporte === 'basket' ? 2 : 3);
+                        
+                        let circulosHTML = '';
+                        for(let i=0; i<cantCirculos; i++) {
+                            circulosHTML += `<div class="circulo"></div>`;
+                        }
+
+                        let logoLigaHTML = partido.liga ? `<img src="${partido.liga}" class="logo-liga" alt="Liga" onerror="this.onerror=null; this.style.display='none'">` : ``;
+                        
+                        partidosHTML += `
+                            <div class="partido">
+                                <div class="equipo">
+                                    <img src="${partido.escudoLocal}" alt="${partido.local}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                    <span>${partido.local}</span>
+                                </div>
+                                <div class="centro-opciones">
+                                    ${logoLigaHTML}
+                                    <div class="opciones">${circulosHTML}</div>
+                                </div>
+                                <div class="equipo">
+                                    <img src="${partido.escudoVisitante}" alt="${partido.visitante}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                    <span>${partido.visitante}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    let multActual = (configBoletas[tipo]?.mult || '10').toString().replace(/^x/i, '');
+                    let minActual = (configBoletas[tipo]?.min || '1000').toString().replace(/^\$/, '');
+                    
+                    const claseExtra = tipo === 'SOÑADORA' ? 'boleta-sonadora' : (tipo === 'FÁCIL' ? 'boleta-facil' : '');
+                    const boletaID = `boleta-render-${tipo}`;
+
+                    contenedorBoletas.innerHTML += `
+                        <div class="contenedor-individual">
+                            <div class="ig-story ${claseExtra}" id="${boletaID}" style="background: ${coloresBoleta[tipo]}; --escala: ${escala};">
+                                <div class="header-boleta">
+                                    <h3>FAN DEL PRODE</h3>
+                                    <p>BOLETA ${tipo}</p>
+                                </div>
+                                <div class="lista-partidos-boleta">
+                                    ${partidosHTML}
+                                </div>
+                                <div class="banner-promo">
+                                    JUGÁ LO QUE QUIERAS Y MULTIPLICAMOS<br>
+                                    TU APUESTA POR <span>x${multActual}</span> - MÍNIMO <span>$${minActual}</span>
+                                </div>
+                                <div class="footer-boleta">@fandelprode</div>
+                            </div>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-descargar" onclick="descargarImagen('${boletaID}', '${tipo}')" style="flex: 1;">Descargar Boleta ${tipo}</button>
+                                <button class="btn-eliminar-boleta" onclick="borrarBoletaIndividual('${tipo}')" title="Eliminar todos los partidos de esta boleta">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function descargarImagen(idBoleta, nombreBoleta) {
+            const elemento = document.getElementById(idBoleta);
+            
+            html2canvas(elemento, { scale: 2, useCORS: true, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a'); 
+                link.download = `Prode_${nombreBoleta.toLowerCase()}.png`; 
+                link.href = canvas.toDataURL('image/png'); 
+                link.click();
+            }).catch(err => { 
+                alert("Hubo un error al generar la imagen."); 
+                console.error(err); 
+            });
+        }
+
+        cambiarBoleta();
+    </script>
+</body>
+</html>
