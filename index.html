@@ -129,7 +129,6 @@
             background: #8a1c1c; 
         }
 
-        /* --- CAJÓN MÁS ANCHO PARA QUE ENTRE LA FECHA --- */
         #seccion-cargar { 
             width: 420px; 
             flex-shrink: 0; 
@@ -234,9 +233,6 @@
             margin: 0;
         }
 
-        /* =================================================== */
-        /* --- ESTILO DEL CONTADOR API Y LAPIZ --- */
-        /* =================================================== */
         .contenedor-contador {
             display: flex;
             align-items: stretch;
@@ -286,7 +282,6 @@
             transform: scale(1.1); 
         }
 
-        /* BOTON BUSCAR AL LADO DE LA API */
         .btn-buscar-api {
             background: #27ae60;
             color: white;
@@ -307,9 +302,6 @@
             background: #2ecc71; 
         }
 
-        /* =================================================== */
-        /* --- CAJA DE BUSQUEDA Y FECHA ALINEADOS --- */
-        /* =================================================== */
         .controles-busqueda-api {
             display: flex;
             gap: 8px;
@@ -340,7 +332,6 @@
             flex: 1;
         }
 
-        /* --- FILTROS CENTRADOS --- */
         .filtros-api { 
             display: flex; 
             flex-wrap: wrap; 
@@ -565,6 +556,17 @@
             overflow: hidden; 
         }
 
+        /* --- LOGO CON TAMAÑO FIJO DESVINCULADO DE LA ESCALA --- */
+        .logo-marca {
+            position: absolute;
+            top: 22px;   
+            left: 10px;  
+            width: 45px; 
+            height: auto;
+            z-index: 10;
+            filter: brightness(0) invert(1) drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+        }
+
         .header-boleta { 
             text-align: center; 
             margin-bottom: calc(15px * var(--escala)); 
@@ -685,9 +687,10 @@
             gap: calc(10px * var(--escala)); 
         }
 
+        /* --- CIRCULOS MÁS GRANDES --- */
         .circulo { 
-            width: calc(28px * var(--escala)); 
-            height: calc(28px * var(--escala)); 
+            width: calc(34px * var(--escala)); /* Antes 28px */
+            height: calc(34px * var(--escala)); /* Antes 28px */
             border: calc(3px * var(--escala)) solid rgba(255,255,255,0.9); 
             border-radius: 50%; 
             display: flex; 
@@ -769,8 +772,8 @@
             gap: calc(6px * var(--escala)); 
         }
         .boleta-sonadora .circulo { 
-            width: calc(22px * var(--escala)); 
-            height: calc(22px * var(--escala)); 
+            width: calc(26px * var(--escala)); /* Antes 22px */
+            height: calc(26px * var(--escala)); /* Antes 22px */
             border-width: calc(2px * var(--escala)); 
         }
 
@@ -804,8 +807,8 @@
             gap: calc(15px * var(--escala)); 
         }
         .boleta-facil .circulo { 
-            width: calc(35px * var(--escala)); 
-            height: calc(35px * var(--escala)); 
+            width: calc(42px * var(--escala)); /* Antes 35px */
+            height: calc(42px * var(--escala)); /* Antes 35px */
             border-width: calc(4px * var(--escala)); 
         }
 
@@ -1727,7 +1730,7 @@
                 return;
             }
 
-            const cacheKey = `prode_cache_partidos_v15_${fechaSeleccionada}`;
+            const cacheKey = `prode_cache_partidos_v17_${fechaSeleccionada}`;
             const datosCacheados = localStorage.getItem(cacheKey);
 
             if (datosCacheados) {
@@ -2221,6 +2224,8 @@
                     contenedorBoletas.innerHTML += `
                         <div class="contenedor-individual">
                             <div class="ig-story ${claseExtra}" id="${boletaID}" style="background: ${coloresBoleta[tipo]}; --escala: ${escala};">
+                                <img src="sdfghjkl-removebg-preview.png" class="logo-marca" alt="Logo" onerror="this.style.display='none'">
+                                
                                 <div class="header-boleta">
                                     <h3>FAN DEL PRODE</h3>
                                     <div class="etiquetas-header">
