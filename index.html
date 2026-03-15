@@ -689,8 +689,8 @@
 
         /* --- CIRCULOS MÁS GRANDES --- */
         .circulo { 
-            width: calc(34px * var(--escala)); /* Antes 28px */
-            height: calc(34px * var(--escala)); /* Antes 28px */
+            width: calc(34px * var(--escala)); 
+            height: calc(34px * var(--escala)); 
             border: calc(3px * var(--escala)) solid rgba(255,255,255,0.9); 
             border-radius: 50%; 
             display: flex; 
@@ -772,8 +772,8 @@
             gap: calc(6px * var(--escala)); 
         }
         .boleta-sonadora .circulo { 
-            width: calc(26px * var(--escala)); /* Antes 22px */
-            height: calc(26px * var(--escala)); /* Antes 22px */
+            width: calc(26px * var(--escala)); 
+            height: calc(26px * var(--escala)); 
             border-width: calc(2px * var(--escala)); 
         }
 
@@ -807,8 +807,8 @@
             gap: calc(15px * var(--escala)); 
         }
         .boleta-facil .circulo { 
-            width: calc(42px * var(--escala)); /* Antes 35px */
-            height: calc(42px * var(--escala)); /* Antes 35px */
+            width: calc(42px * var(--escala)); 
+            height: calc(42px * var(--escala)); 
             border-width: calc(4px * var(--escala)); 
         }
 
@@ -2247,22 +2247,31 @@
             });
         }
 
+        // FUNCIÓN REPARADA PARA SOLUCIONAR EL CORS Y TIEMPOS DE CARGA
         function descargarImagen(idBoleta, nombreBoleta) {
             const elemento = document.getElementById(idBoleta);
             const transformOriginal = elemento.style.transform;
             elemento.style.transform = 'scale(1)';
             
-            html2canvas(elemento, { scale: 4, useCORS: true, backgroundColor: null }).then(canvas => {
-                elemento.style.transform = transformOriginal;
-                const link = document.createElement('a'); 
-                link.download = `Prode_${nombreBoleta.toLowerCase()}.png`; 
-                link.href = canvas.toDataURL('image/png', 1.0); 
-                link.click();
-            }).catch(err => { 
-                elemento.style.transform = transformOriginal;
-                alert("Hubo un error al generar la imagen. Asegurate de tener conexión a internet."); 
-                console.error(err); 
-            });
+            // Timeout agregado para dar tiempo a renderizar la imagen base64 o cross-origin
+            setTimeout(() => {
+                html2canvas(elemento, { 
+                    scale: 4, 
+                    useCORS: true, 
+                    allowTaint: false,
+                    backgroundColor: null 
+                }).then(canvas => {
+                    elemento.style.transform = transformOriginal;
+                    const link = document.createElement('a'); 
+                    link.download = `Prode_${nombreBoleta.toLowerCase()}.png`; 
+                    link.href = canvas.toDataURL('image/png', 1.0); 
+                    link.click();
+                }).catch(err => { 
+                    elemento.style.transform = transformOriginal;
+                    alert("Error de seguridad (CORS). No se puede descargar la foto porque abriste el archivo con doble clic directo en vez de usar un servidor local. Para usar imágenes externas, ejecutá el HTML usando la extensión 'Live Server' en Visual Studio Code."); 
+                    console.error(err); 
+                });
+            }, 300);
         }
 
         cambiarBoleta();
