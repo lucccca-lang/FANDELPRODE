@@ -556,13 +556,19 @@
             overflow: hidden; 
         }
 
+        /* --- LOGO Y TÍTULO SIN SUPERPOSICIONES --- */
+        .titulo-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Separación entre el logo y el texto */
+            margin-bottom: 2px;
+        }
+
         .logo-marca {
-            position: absolute;
-            top: 22px;   
-            left: 10px;  
-            width: 45px; 
+            width: 45px; /* Tamaño base del logo */
             height: auto;
-            z-index: 10;
+            flex-shrink: 0; /* Evita que el logo se deforme si el texto es muy largo */
             filter: brightness(0) invert(1) drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
         }
 
@@ -577,7 +583,7 @@
             letter-spacing: 1px; 
             color: #fff; 
             text-shadow: 2px 2px 4px rgba(0,0,0,0.4); 
-            margin-bottom: 2px;
+            margin: 0; /* El margen inferior ahora lo maneja titulo-wrapper */
         }
 
         .etiquetas-header {
@@ -643,11 +649,11 @@
             justify-content: center; 
         }
 
-        /* --- NUEVO SISTEMA DE ESCUDOS ANTIDEFORMACIÓN --- */
+        /* --- NUEVO SISTEMA DE ESCUDOS ANTIDEFORMACIÓN CORREGIDO --- */
         .liga-wrapper {
             height: calc(20px * var(--escala));
             display: flex;
-            justify-content: center;
+            justify-content: center; /* ACÁ ESTABA EL ERROR EN TU VS CODE */
             align-items: center;
             margin-bottom: calc(3px * var(--escala));
         }
@@ -731,7 +737,6 @@
             border: 3px solid rgba(255, 255, 255, 0.4); 
         }
 
-        /* --- NÚMEROS SIN CAJA --- */
         .banner-promo span { 
             color: #d32f2f; 
             font-size: 14px; 
@@ -753,118 +758,38 @@
         /* =================================================== */
         
         /* SOÑADORA */
-        .boleta-sonadora .header-boleta { 
-            margin-bottom: calc(10px * var(--escala)); 
-        }
-        .boleta-sonadora .header-boleta h3 { 
-            font-size: 28px; 
-        }
-        .boleta-sonadora .lista-partidos-boleta { 
-            gap: calc(4px * var(--escala)); 
-        }
-        .boleta-sonadora .partido { 
-            height: calc(60px * var(--escala)); 
-            padding: calc(4px * var(--escala)) calc(8px * var(--escala)); 
-            border-radius: calc(8px * var(--escala)); 
-        }
-        .boleta-sonadora .liga-wrapper { 
-            height: calc(16px * var(--escala)); 
-        }
-        .boleta-sonadora .escudo-wrapper { 
-            width: calc(30px * var(--escala)); 
-            height: calc(30px * var(--escala)); 
-        }
-        .boleta-sonadora .equipo span { 
-            font-size: calc(9px * var(--escala)); 
-            height: calc(20px * var(--escala)); 
-        }
-        .boleta-sonadora .opciones { 
-            gap: calc(6px * var(--escala)); 
-        }
-        .boleta-sonadora .circulo { 
-            width: calc(26px * var(--escala)); 
-            height: calc(26px * var(--escala)); 
-            border-width: calc(2px * var(--escala)); 
-        }
+        .boleta-sonadora .header-boleta { margin-bottom: calc(10px * var(--escala)); }
+        .boleta-sonadora .header-boleta h3 { font-size: 28px; }
+        .boleta-sonadora .lista-partidos-boleta { gap: calc(4px * var(--escala)); }
+        .boleta-sonadora .partido { height: calc(60px * var(--escala)); padding: calc(4px * var(--escala)) calc(8px * var(--escala)); border-radius: calc(8px * var(--escala)); }
+        .boleta-sonadora .liga-wrapper { height: calc(16px * var(--escala)); }
+        .boleta-sonadora .escudo-wrapper { width: calc(30px * var(--escala)); height: calc(30px * var(--escala)); }
+        .boleta-sonadora .equipo span { font-size: calc(9px * var(--escala)); height: calc(20px * var(--escala)); }
+        .boleta-sonadora .opciones { gap: calc(6px * var(--escala)); }
+        .boleta-sonadora .circulo { width: calc(26px * var(--escala)); height: calc(26px * var(--escala)); border-width: calc(2px * var(--escala)); }
+        .boleta-sonadora .logo-marca { width: 35px; } /* Ajuste fino de logo para soñadora */
 
         /* FACIL */
-        .boleta-facil .header-boleta h3 { 
-            font-size: 38px; 
-        }
-        .boleta-facil .lista-partidos-boleta { 
-            gap: calc(15px * var(--escala)); 
-            justify-content: center; 
-        }
-        .boleta-facil .partido { 
-            height: calc(100px * var(--escala)); 
-            padding: calc(15px * var(--escala)) calc(15px * var(--escala)); 
-            border-radius: calc(15px * var(--escala)); 
-        }
-        .boleta-facil .liga-wrapper { 
-            height: calc(25px * var(--escala)); 
-            margin-bottom: calc(5px * var(--escala)); 
-        }
-        .boleta-facil .escudo-wrapper { 
-            width: calc(50px * var(--escala)); 
-            height: calc(50px * var(--escala)); 
-            margin-bottom: calc(5px * var(--escala)); 
-        }
-        .boleta-facil .equipo span { 
-            font-size: calc(14px * var(--escala)); 
-            height: calc(30px * var(--escala)); 
-        }
-        .boleta-facil .opciones { 
-            gap: calc(15px * var(--escala)); 
-        }
-        .boleta-facil .circulo { 
-            width: calc(42px * var(--escala)); 
-            height: calc(42px * var(--escala)); 
-            border-width: calc(4px * var(--escala)); 
-        }
+        .boleta-facil .header-boleta h3 { font-size: 34px; } /* Un poquito más chico para que entre con el logo al lado */
+        .boleta-facil .lista-partidos-boleta { gap: calc(15px * var(--escala)); justify-content: center; }
+        .boleta-facil .partido { height: calc(100px * var(--escala)); padding: calc(15px * var(--escala)) calc(15px * var(--escala)); border-radius: calc(15px * var(--escala)); }
+        .boleta-facil .liga-wrapper { height: calc(25px * var(--escala)); margin-bottom: calc(5px * var(--escala)); }
+        .boleta-facil .escudo-wrapper { width: calc(50px * var(--escala)); height: calc(50px * var(--escala)); margin-bottom: calc(5px * var(--escala)); }
+        .boleta-facil .equipo span { font-size: calc(14px * var(--escala)); height: calc(30px * var(--escala)); }
+        .boleta-facil .opciones { gap: calc(15px * var(--escala)); }
+        .boleta-facil .circulo { width: calc(42px * var(--escala)); height: calc(42px * var(--escala)); border-width: calc(4px * var(--escala)); }
+        .boleta-facil .logo-marca { width: 50px; } /* Ajuste fino de logo para facil */
 
         /* RESULTADO */
-        .boleta-resultado .partido { 
-            height: 180px; 
-            padding: 15px; 
-            border-radius: 15px; 
-            flex-direction: row; 
-            justify-content: space-between; 
-            gap: 5px; 
-            background: rgba(0,0,0,0.25); 
-            border: 2px solid rgba(255,255,255,0.3); 
-        }
-        .boleta-resultado .equipo { 
-            width: 90px; 
-        }
-        .boleta-resultado .escudo-wrapper { 
-            width: 65px; 
-            height: 65px; 
-            margin-bottom: 10px; 
-        }
-        .boleta-resultado .equipo span { 
-            font-size: 13px; 
-            height: auto; 
-        }
-        .boleta-resultado .centro-opciones { 
-            width: 50px; 
-        }
-        .boleta-resultado .liga-wrapper { 
-            height: 35px; 
-            margin-bottom: 10px; 
-        }
-        .cuadrado-resultado { 
-            width: 50px; 
-            height: 50px; 
-            border: 4px solid #fff; 
-            border-radius: 8px; 
-            background: rgba(0,0,0,0.5); 
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8); 
-        }
+        .boleta-resultado .partido { height: 180px; padding: 15px; border-radius: 15px; flex-direction: row; justify-content: space-between; gap: 5px; background: rgba(0,0,0,0.25); border: 2px solid rgba(255,255,255,0.3); }
+        .boleta-resultado .equipo { width: 90px; }
+        .boleta-resultado .escudo-wrapper { width: 65px; height: 65px; margin-bottom: 10px; }
+        .boleta-resultado .equipo span { font-size: 13px; height: auto; }
+        .boleta-resultado .centro-opciones { width: 50px; }
+        .boleta-resultado .liga-wrapper { height: 35px; margin-bottom: 10px; }
+        .cuadrado-resultado { width: 50px; height: 50px; border: 4px solid #fff; border-radius: 8px; background: rgba(0,0,0,0.5); box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
 
-        #btn-toggle-cargar { 
-            display: none; 
-            margin-bottom: 20px; 
-        }
+        #btn-toggle-cargar { display: none; margin-bottom: 20px; }
 
         /* =================================================== */
         /* --- ESTILOS DE LOS MODALES --- */
@@ -904,10 +829,7 @@
             margin-bottom: 20px; 
         }
         
-        .modal-header h2 { 
-            margin: 0; 
-            color: #fff; 
-        }
+        .modal-header h2 { margin: 0; color: #fff; }
         
         .btn-cerrar-modal { 
             background: transparent; 
@@ -919,47 +841,14 @@
             padding: 0; 
         }
         
-        .btn-cerrar-modal:hover { 
-            color: white; 
-            background: transparent; 
-        }
+        .btn-cerrar-modal:hover { color: white; background: transparent; }
 
-        .resumen-finanzas { 
-            display: flex; 
-            gap: 15px; 
-            margin-bottom: 20px; 
-        }
-        
-        .tarjeta-resumen { 
-            flex: 1; 
-            background: #2a2a2a; 
-            padding: 15px; 
-            border-radius: 8px; 
-            text-align: center; 
-            border-left: 4px solid #f1c40f; 
-        }
-        
-        .tarjeta-resumen h4 { 
-            margin: 0; 
-            color: #aaa; 
-            font-size: 12px; 
-            text-transform: uppercase; 
-        }
-        
-        .tarjeta-resumen p { 
-            margin: 5px 0 0 0; 
-            font-size: 24px; 
-            font-weight: bold; 
-            color: white; 
-        }
-        
-        .tarjeta-resumen.ganancia { 
-            border-left-color: #27ae60; 
-        }
-        
-        .tarjeta-resumen.ganancia p { 
-            color: #2ecc71; 
-        }
+        .resumen-finanzas { display: flex; gap: 15px; margin-bottom: 20px; }
+        .tarjeta-resumen { flex: 1; background: #2a2a2a; padding: 15px; border-radius: 8px; text-align: center; border-left: 4px solid #f1c40f; }
+        .tarjeta-resumen h4 { margin: 0; color: #aaa; font-size: 12px; text-transform: uppercase; }
+        .tarjeta-resumen p { margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: white; }
+        .tarjeta-resumen.ganancia { border-left-color: #27ae60; }
+        .tarjeta-resumen.ganancia p { color: #2ecc71; }
 
         .lista-finanzas { 
             margin-top: 20px; 
@@ -972,150 +861,37 @@
             gap: 10px; 
         }
         
-        .item-finanza { 
-            background: #2a2a2a; 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        
-        .info-finanza p { 
-            margin: 0; 
-            font-size: 14px; 
-            font-weight: bold; 
-        }
-        
-        .info-finanza small { 
-            color: #aaa; 
-            font-size: 12px; 
-        }
-        
-        .montos-finanza { 
-            text-align: right; 
-            margin-right: 15px; 
-        }
-        
-        .montos-finanza span { 
-            display: block; 
-            font-size: 13px; 
-        }
-        
-        .montos-finanza .ingreso { 
-            color: #f1c40f; 
-        }
-        
-        .montos-finanza .ganancia { 
-            color: #2ecc71; 
-            font-weight: bold; 
-        }
+        .item-finanza { background: #2a2a2a; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .info-finanza p { margin: 0; font-size: 14px; font-weight: bold; }
+        .info-finanza small { color: #aaa; font-size: 12px; }
+        .montos-finanza { text-align: right; margin-right: 15px; }
+        .montos-finanza span { display: block; font-size: 13px; }
+        .montos-finanza .ingreso { color: #f1c40f; }
+        .montos-finanza .ganancia { color: #2ecc71; font-weight: bold; }
 
-        .btn-datos { 
-            padding: 15px; 
-            font-size: 16px; 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-        }
-        
-        .btn-descargar-datos { 
-            background-color: #2980b9; 
-        }
-        
-        .btn-descargar-datos:hover { 
-            background-color: #3498db; 
-        }
-        
-        .btn-restaurar-datos { 
-            background-color: #d35400; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        
-        .btn-restaurar-datos:hover { 
-            background-color: #e67e22; 
-        }
-        
-        .btn-restaurar-datos input[type="file"] { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            opacity: 0; 
-            cursor: pointer; 
-        }
+        .btn-datos { padding: 15px; font-size: 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-descargar-datos { background-color: #2980b9; }
+        .btn-descargar-datos:hover { background-color: #3498db; }
+        .btn-restaurar-datos { background-color: #d35400; position: relative; overflow: hidden; }
+        .btn-restaurar-datos:hover { background-color: #e67e22; }
+        .btn-restaurar-datos input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         /* =================================================== */
         /* --- MEDIA QUERIES PARA CELULARES Y CENTRADO --- */
         /* =================================================== */
         @media (max-width: 900px) { 
-            .header-principal { 
-                flex-direction: column; 
-                gap: 15px; 
-                text-align: center; 
-            }
-            .contenedor { 
-                flex-direction: column; 
-                align-items: center; 
-                width: 100%; 
-            } 
-            #seccion-cargar { 
-                width: 100%; 
-                display: none; 
-                position: static; 
-            } 
-            #btn-toggle-cargar { 
-                display: block; 
-            } 
-            .resumen-finanzas { 
-                flex-direction: column; 
-            }
-            #seccion-boleta { 
-                width: 100%; 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                overflow: hidden; 
-                padding-left: 0; 
-                padding-right: 0;
-            }
-            #contenedor-boletas { 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                width: 100%; 
-                gap: 40px; 
-            }
-            .contenedor-individual { 
-                width: 100%; 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-            }
-            .header-previa { 
-                justify-content: center; 
-            }
+            .header-principal { flex-direction: column; gap: 15px; text-align: center; }
+            .contenedor { flex-direction: column; align-items: center; width: 100%; } 
+            #seccion-cargar { width: 100%; display: none; position: static; } 
+            #btn-toggle-cargar { display: block; } 
+            .resumen-finanzas { flex-direction: column; }
+            #seccion-boleta { width: 100%; display: flex; flex-direction: column; align-items: center; overflow: hidden; padding-left: 0; padding-right: 0; }
+            #contenedor-boletas { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 40px; }
+            .contenedor-individual { width: 100%; display: flex; flex-direction: column; align-items: center; }
+            .header-previa { justify-content: center; }
         }
-        
-        @media (max-width: 450px) { 
-            .ig-story { 
-                transform: scale(0.85); 
-                transform-origin: top center; 
-                margin-bottom: -100px; 
-            } 
-        }
-        
-        @media (max-width: 380px) { 
-            .ig-story { 
-                transform: scale(0.75); 
-                transform-origin: top center; 
-                margin-bottom: -180px; 
-            } 
-        }
+        @media (max-width: 450px) { .ig-story { transform: scale(0.85); transform-origin: top center; margin-bottom: -100px; } }
+        @media (max-width: 380px) { .ig-story { transform: scale(0.75); transform-origin: top center; margin-bottom: -180px; } }
     </style>
 </head>
 <body>
@@ -1192,8 +968,7 @@
                     <label style="border-color: #8e44ad; color: #9b59b6;"><input type="checkbox" id="filtro-todo-tenis"> 🎾 TODO Tenis</label>
                 </div>
 
-                <div class="lista-api" id="contenedor-partidos-api">
-                    </div>
+                <div class="lista-api" id="contenedor-partidos-api"></div>
             </div>
 
             <div style="border-top: 1px dashed #555; margin-bottom: 15px; padding-top: 15px;">
@@ -1260,8 +1035,7 @@
                 </div>
             </div>
 
-            <div id="contenedor-resumen-mensual" style="margin-bottom: 20px; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; display: none;">
-            </div>
+            <div id="contenedor-resumen-mensual" style="margin-bottom: 20px; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444; display: none;"></div>
 
             <div style="background: #222; padding: 15px; border-radius: 8px; border: 1px solid #444;">
                 <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 14px; color: #aaa;">NUEVO INGRESO</h4>
@@ -1282,8 +1056,7 @@
                 </div>
             </div>
 
-            <div class="lista-finanzas" id="contenedor-lista-finanzas">
-            </div>
+            <div class="lista-finanzas" id="contenedor-lista-finanzas"></div>
         </div>
     </div>
 
@@ -1443,13 +1216,8 @@
         // ==========================================
         // GESTIÓN DE DATOS (BACKUP / RESTAURAR / BORRAR TODO)
         // ==========================================
-        function abrirDatos() { 
-            document.getElementById('modal-datos').style.display = 'flex'; 
-        }
-        
-        function cerrarDatos() { 
-            document.getElementById('modal-datos').style.display = 'none'; 
-        }
+        function abrirDatos() { document.getElementById('modal-datos').style.display = 'flex'; }
+        function cerrarDatos() { document.getElementById('modal-datos').style.display = 'none'; }
         
         function exportarDatos() {
             const backup = {
@@ -1512,15 +1280,8 @@
         let baseDeFinanzas = JSON.parse(localStorage.getItem('fandelprode_finanzas')) || [];
         let idEditandoFinanza = null;
 
-        function abrirCaja() { 
-            document.getElementById('modal-finanzas').style.display = 'flex'; 
-            renderizarFinanzas(); 
-        }
-        
-        function cerrarCaja() { 
-            document.getElementById('modal-finanzas').style.display = 'none'; 
-            cancelarEdicionCaja(); 
-        }
+        function abrirCaja() { document.getElementById('modal-finanzas').style.display = 'flex'; renderizarFinanzas(); }
+        function cerrarCaja() { document.getElementById('modal-finanzas').style.display = 'none'; cancelarEdicionCaja(); }
 
         function guardarRegistroCaja() {
             const nombre = document.getElementById('caja-nombre').value;
@@ -1528,26 +1289,18 @@
             const gananciaInput = document.getElementById('caja-ganancia').value;
             const ganancia = gananciaInput === '' ? null : parseFloat(gananciaInput);
 
-            if (!nombre || isNaN(ingreso)) { 
-                alert("Por favor completá al menos el nombre y la plata apostada."); 
-                return; 
-            }
+            if (!nombre || isNaN(ingreso)) { alert("Por favor completá al menos el nombre y la plata apostada."); return; }
 
             if (idEditandoFinanza) {
                 let index = baseDeFinanzas.findIndex(f => f.id === idEditandoFinanza);
                 if (index !== -1) {
-                    baseDeFinanzas[index].nombre = nombre; 
-                    baseDeFinanzas[index].ingreso = ingreso; 
-                    baseDeFinanzas[index].ganancia = ganancia;
+                    baseDeFinanzas[index].nombre = nombre; baseDeFinanzas[index].ingreso = ingreso; baseDeFinanzas[index].ganancia = ganancia;
                 }
                 cancelarEdicionCaja();
             } else {
                 const fechaActual = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
                 baseDeFinanzas.unshift({ id: Date.now(), fecha: fechaActual, nombre: nombre, ingreso: ingreso, ganancia: ganancia });
-                
-                document.getElementById('caja-nombre').value = ''; 
-                document.getElementById('caja-ingreso').value = ''; 
-                document.getElementById('caja-ganancia').value = '';
+                document.getElementById('caja-nombre').value = ''; document.getElementById('caja-ingreso').value = ''; document.getElementById('caja-ganancia').value = '';
             }
 
             localStorage.setItem('fandelprode_finanzas', JSON.stringify(baseDeFinanzas));
@@ -1558,26 +1311,15 @@
             const registro = baseDeFinanzas.find(f => f.id === id);
             if (!registro) return;
             
-            document.getElementById('caja-nombre').value = registro.nombre;
-            document.getElementById('caja-ingreso').value = registro.ingreso;
-            document.getElementById('caja-ganancia').value = registro.ganancia !== null ? registro.ganancia : '';
-            
+            document.getElementById('caja-nombre').value = registro.nombre; document.getElementById('caja-ingreso').value = registro.ingreso; document.getElementById('caja-ganancia').value = registro.ganancia !== null ? registro.ganancia : '';
             idEditandoFinanza = id;
-            
-            document.getElementById('btn-guardar-caja').innerText = 'GUARDAR CAMBIOS'; 
-            document.getElementById('btn-guardar-caja').style.background = '#f39c12';
-            document.getElementById('btn-cancelar-caja').style.display = 'block';
+            document.getElementById('btn-guardar-caja').innerText = 'GUARDAR CAMBIOS'; document.getElementById('btn-guardar-caja').style.background = '#f39c12'; document.getElementById('btn-cancelar-caja').style.display = 'block';
         }
 
         function cancelarEdicionCaja() {
             idEditandoFinanza = null;
-            document.getElementById('caja-nombre').value = ''; 
-            document.getElementById('caja-ingreso').value = ''; 
-            document.getElementById('caja-ganancia').value = '';
-            
-            document.getElementById('btn-guardar-caja').innerText = 'AGREGAR A LA CAJA'; 
-            document.getElementById('btn-guardar-caja').style.background = '#27ae60';
-            document.getElementById('btn-cancelar-caja').style.display = 'none';
+            document.getElementById('caja-nombre').value = ''; document.getElementById('caja-ingreso').value = ''; document.getElementById('caja-ganancia').value = '';
+            document.getElementById('btn-guardar-caja').innerText = 'AGREGAR A LA CAJA'; document.getElementById('btn-guardar-caja').style.background = '#27ae60'; document.getElementById('btn-cancelar-caja').style.display = 'none';
         }
 
         function borrarFinanza(id) {
@@ -1592,11 +1334,7 @@
         function renderizarFinanzas() {
             const contenedor = document.getElementById('contenedor-lista-finanzas');
             const contenedorMensual = document.getElementById('contenedor-resumen-mensual');
-            
-            let totalIngreso = 0; 
-            let totalGanancia = 0; 
-            let resumenPorMes = {};
-            
+            let totalIngreso = 0; let totalGanancia = 0; let resumenPorMes = {};
             contenedor.innerHTML = '';
 
             if (baseDeFinanzas.length === 0) {
@@ -1612,25 +1350,18 @@
                     let partes = f.fecha.split(',')[0].split('/');
                     let mesAnio = partes.length === 3 ? `${partes[1]}/${partes[2]}` : 'Desconocido';
                     
-                    if (!resumenPorMes[mesAnio]) { 
-                        resumenPorMes[mesAnio] = { ingreso: 0, ganancia: 0 }; 
-                    }
-                    resumenPorMes[mesAnio].ingreso += f.ingreso; 
-                    resumenPorMes[mesAnio].ganancia += gananciaReal;
+                    if (!resumenPorMes[mesAnio]) { resumenPorMes[mesAnio] = { ingreso: 0, ganancia: 0 }; }
+                    resumenPorMes[mesAnio].ingreso += f.ingreso; resumenPorMes[mesAnio].ganancia += gananciaReal;
 
                     let txtGanancia = f.ganancia !== null ? `Ganaste: $${f.ganancia.toLocaleString('es-AR')}` : `<span style="color:#e67e22;">Ganancia Pendiente</span>`;
 
                     contenedor.innerHTML += `
                         <div class="item-finanza">
                             <div class="info-finanza">
-                                <p>${f.nombre}</p>
-                                <small>${f.fecha}</small>
+                                <p>${f.nombre}</p><small>${f.fecha}</small>
                             </div>
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="montos-finanza">
-                                    <span class="ingreso">Apostó: $${f.ingreso.toLocaleString('es-AR')}</span>
-                                    <span class="ganancia">${txtGanancia}</span>
-                                </div>
+                                <div class="montos-finanza"><span class="ingreso">Apostó: $${f.ingreso.toLocaleString('es-AR')}</span><span class="ganancia">${txtGanancia}</span></div>
                                 <div style="display: flex; gap: 5px;">
                                     <button onclick="editarFinanza(${f.id})" style="background: #f39c12; width: 30px; height: 30px; padding: 0; border-radius: 5px; font-size: 14px;" title="Editar">✏️</button>
                                     <button onclick="borrarFinanza(${f.id})" style="background: #ab2323; width: 30px; height: 30px; padding: 0; border-radius: 5px; font-size: 14px;" title="Borrar">🗑️</button>
@@ -1652,11 +1383,7 @@
                 for (let mes in resumenPorMes) {
                     let [m, y] = mes.split('/');
                     let nombreMes = nombresMeses[m] ? `${nombresMeses[m]} ${y}` : mes;
-                    htmlMensual += `
-                        <div style="display: flex; justify-content: space-between; background: #333; padding: 8px 12px; border-radius: 6px; font-size: 13px;">
-                            <strong>${nombreMes}</strong><span style="color: #2ecc71; font-weight: bold;">Ganancia: $${resumenPorMes[mes].ganancia.toLocaleString('es-AR')}</span>
-                        </div>
-                    `;
+                    htmlMensual += `<div style="display: flex; justify-content: space-between; background: #333; padding: 8px 12px; border-radius: 6px; font-size: 13px;"><strong>${nombreMes}</strong><span style="color: #2ecc71; font-weight: bold;">Ganancia: $${resumenPorMes[mes].ganancia.toLocaleString('es-AR')}</span></div>`;
                 }
                 htmlMensual += '</div>';
                 contenedorMensual.innerHTML = htmlMensual;
@@ -1697,37 +1424,25 @@
             while(intentos < API_KEYS.length) {
                 let apiKey = API_KEYS[currentKeyIndex];
                 try {
-                    const reqFutbol = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/football/scheduled-events/${fecha}`, { 
-                        headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } 
-                    }).then(r => r.json());
-                    
-                    const reqBasket = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/basketball/scheduled-events/${fecha}`, { 
-                        headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } 
-                    }).then(r => r.json());
-
-                    const reqTenis = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/tennis/scheduled-events/${fecha}`, { 
-                        headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } 
-                    }).then(r => r.json());
+                    const reqFutbol = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/football/scheduled-events/${fecha}`, { headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } }).then(r => r.json());
+                    const reqBasket = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/basketball/scheduled-events/${fecha}`, { headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } }).then(r => r.json());
+                    const reqTenis = fetch(`https://sportapi7.p.rapidapi.com/api/v1/sport/tennis/scheduled-events/${fecha}`, { headers: { 'x-rapidapi-key': apiKey, 'x-rapidapi-host': 'sportapi7.p.rapidapi.com' } }).then(r => r.json());
                     
                     const [datosFutbol, datosBasket, datosTenis] = await Promise.all([reqFutbol, reqBasket, reqTenis]);
 
                     if (datosFutbol.message || datosBasket.message || datosTenis.message) {
                         console.warn(`Clave ${currentKeyIndex + 1} agotada o inválida. Pasando a la siguiente...`);
                         currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
-                        intentos++;
-                        continue; 
+                        intentos++; continue; 
                     }
-
                     localStorage.setItem('fandelprode_key_index', currentKeyIndex);
                     return { exito: true, futbol: datosFutbol, basket: datosBasket, tenis: datosTenis, claveUsada: currentKeyIndex + 1 };
-
                 } catch (error) {
                     console.error(`Error de red con la clave ${currentKeyIndex + 1}. Pasando a la siguiente...`);
                     currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
                     intentos++;
                 }
             }
-            
             return { exito: false };
         }
 
@@ -1755,19 +1470,13 @@
             const resultado = await descargarPartidosConRotacion(fechaSeleccionada);
 
             if (!resultado.exito) {
-                contenedor.innerHTML = `
-                    <div style="background: #ab2323; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #ff4d4d; margin-bottom: 10px;">
-                        <strong style="color: white; font-size: 14px;">⚠️ ALERTA ROJA: TODAS LAS CLAVES AGOTADAS</strong><br>
-                        <span style="color: #ffcccc; font-size: 12px; display: block; margin-top: 5px;">Se consumió el límite de tus ${API_KEYS.length} cuentas. Necesitás crear cuentas nuevas y reemplazar las claves en el código.</span>
-                    </div>`;
+                contenedor.innerHTML = `<div style="background: #ab2323; padding: 12px; border-radius: 8px; text-align: center; border: 1px solid #ff4d4d; margin-bottom: 10px;"><strong style="color: white; font-size: 14px;">⚠️ ALERTA ROJA: TODAS LAS CLAVES AGOTADAS</strong><br><span style="color: #ffcccc; font-size: 12px; display: block; margin-top: 5px;">Se consumió el límite de tus ${API_KEYS.length} cuentas. Necesitás crear cuentas nuevas y reemplazar las claves en el código.</span></div>`;
                 return;
             }
 
-            // --- ACTUALIZAMOS EL CONTADOR DE API (Gastamos 3 consultas) ---
             usosAPI += 3;
             localStorage.setItem('fandelprode_api_usos', usosAPI);
             actualizarContadorAPI();
-            // --------------------------------------------------------------
 
             partidosDelDia = [];
             
@@ -1778,51 +1487,21 @@
             if (datosFutbol.events && Array.isArray(datosFutbol.events)) {
                 datosFutbol.events.forEach(p => {
                     let idTorneo = p.tournament?.uniqueTournament?.id || p.tournament?.id;
-                    partidosDelDia.push({
-                        deporte: 'futbol', 
-                        ligaId: `f_${idTorneo}`, 
-                        ligaNombre: p.tournament?.name,
-                        local: p.homeTeam?.name, 
-                        visitante: p.awayTeam?.name, 
-                        fechaRAW: p.startTimestamp * 1000,
-                        logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, 
-                        logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, 
-                        logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image`
-                    });
+                    partidosDelDia.push({ deporte: 'futbol', ligaId: `f_${idTorneo}`, ligaNombre: p.tournament?.name, local: p.homeTeam?.name, visitante: p.awayTeam?.name, fechaRAW: p.startTimestamp * 1000, logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image` });
                 });
             }
 
             if (datosBasket.events && Array.isArray(datosBasket.events)) {
                 datosBasket.events.forEach(p => {
                     let idTorneo = p.tournament?.uniqueTournament?.id || p.tournament?.id;
-                    partidosDelDia.push({
-                        deporte: 'basket', 
-                        ligaId: `b_${idTorneo}`, 
-                        ligaNombre: p.tournament?.name,
-                        local: p.homeTeam?.name, 
-                        visitante: p.awayTeam?.name, 
-                        fechaRAW: p.startTimestamp * 1000, 
-                        logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, 
-                        logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, 
-                        logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image`
-                    });
+                    partidosDelDia.push({ deporte: 'basket', ligaId: `b_${idTorneo}`, ligaNombre: p.tournament?.name, local: p.homeTeam?.name, visitante: p.awayTeam?.name, fechaRAW: p.startTimestamp * 1000, logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image` });
                 });
             }
 
             if (datosTenis.events && Array.isArray(datosTenis.events)) {
                 datosTenis.events.forEach(p => {
                     let idTorneo = p.tournament?.uniqueTournament?.id || p.tournament?.id;
-                    partidosDelDia.push({
-                        deporte: 'tenis', 
-                        ligaId: `t_${idTorneo}`, 
-                        ligaNombre: p.tournament?.name,
-                        local: p.homeTeam?.name, 
-                        visitante: p.awayTeam?.name, 
-                        fechaRAW: p.startTimestamp * 1000, 
-                        logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, 
-                        logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, 
-                        logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image`
-                    });
+                    partidosDelDia.push({ deporte: 'tenis', ligaId: `t_${idTorneo}`, ligaNombre: p.tournament?.name, local: p.homeTeam?.name, visitante: p.awayTeam?.name, fechaRAW: p.startTimestamp * 1000, logoLiga: `https://api.sofascore.app/api/v1/unique-tournament/${idTorneo}/image`, logoLocal: `https://api.sofascore.app/api/v1/team/${p.homeTeam?.id}/image`, logoVisitante: `https://api.sofascore.app/api/v1/team/${p.awayTeam?.id}/image` });
                 });
             }
 
@@ -1832,7 +1511,6 @@
             }
 
             localStorage.setItem(cacheKey, JSON.stringify(partidosDelDia));
-
             renderizarVidriera();
         }
 
@@ -1841,11 +1519,9 @@
             if (partidosDelDia.length === 0) return;
 
             const textoBuscado = document.getElementById('input-buscador-api').value.toLowerCase();
-            
             const todoFutbol = document.getElementById('filtro-todas-futbol').checked;
             const todoBasket = document.getElementById('filtro-todo-basket').checked;
             const todoTenis = document.getElementById('filtro-todo-tenis').checked;
-            
             const filtro5Ligas = document.getElementById('filtro-5-ligas').checked;
             const ligasSeleccionadas = Array.from(document.querySelectorAll('.filtro-liga')).filter(cb => cb.checked).map(cb => cb.value);
 
@@ -1859,11 +1535,9 @@
                 }
                 
                 let pasaFiltro = false;
-
                 if (todoFutbol && p.deporte === 'futbol') pasaFiltro = true;
                 if (todoBasket && p.deporte === 'basket') pasaFiltro = true;
                 if (todoTenis && p.deporte === 'tenis') pasaFiltro = true;
-                
                 if (filtro5Ligas && cincoLigasIDs.includes(p.ligaId)) pasaFiltro = true;
                 if (ligasSeleccionadas.includes(p.ligaId)) pasaFiltro = true;
                 
@@ -1883,22 +1557,12 @@
                 let hora = "Hora a conf.";
                 if (p.fechaRAW) {
                     const fechaObj = new Date(p.fechaRAW);
-                    if (!isNaN(fechaObj.getTime())) {
-                        hora = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
-                    }
+                    if (!isNaN(fechaObj.getTime())) { hora = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }); }
                 }
 
-                let iconoDeporte = '⚽'; 
-                let colorBorde = '#27ae60';
-                
-                if (p.deporte === 'basket') { 
-                    iconoDeporte = '🏀'; 
-                    colorBorde = '#e67e22'; 
-                } 
-                else if (p.deporte === 'tenis') { 
-                    iconoDeporte = '🎾'; 
-                    colorBorde = '#8e44ad'; 
-                }
+                let iconoDeporte = '⚽'; let colorBorde = '#27ae60';
+                if (p.deporte === 'basket') { iconoDeporte = '🏀'; colorBorde = '#e67e22'; } 
+                else if (p.deporte === 'tenis') { iconoDeporte = '🎾'; colorBorde = '#8e44ad'; }
 
                 const localSafe = p.local ? p.local.replace(/'/g, "\\'") : 'Local';
                 const visitanteSafe = p.visitante ? p.visitante.replace(/'/g, "\\'") : 'Visitante';
@@ -1917,9 +1581,7 @@
         }
 
         document.querySelectorAll('.filtros-api input').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                renderizarVidriera();
-            });
+            checkbox.addEventListener('change', () => { renderizarVidriera(); });
         });
 
         function agregarDesdeAPI(deporteAPI, liga, local, visitante, logoLigaAPI, logoLocalAPI, logoVisitanteAPI) {
@@ -1932,8 +1594,7 @@
             const escudoVisitante = logoVisitanteAPI ? logoVisitanteAPI : `escudos/${normalizarNombre(visitante)}.png`;
 
             baseDeDatos[tipoBoleta].push({ id: Date.now(), circulos: cantCirculos, liga: ligaRuta, ligaNombre: liga, local: local, escudoLocal: escudoLocal, visitante: visitante, escudoVisitante: escudoVisitante, deporte: deporteAPI });
-            guardarEnMemoria(); 
-            actualizarInterfaz();
+            guardarEnMemoria(); actualizarInterfaz();
         }
 
         actualizarContadorAPI();
@@ -1945,62 +1606,42 @@
         
         btnToggle.addEventListener('click', () => {
             if (seccionCargar.style.display === 'none' || seccionCargar.style.display === '') {
-                seccionCargar.style.display = 'block'; 
-                btnToggle.innerText = 'OCULTAR SECCIÓN CARGAR';
+                seccionCargar.style.display = 'block'; btnToggle.innerText = 'OCULTAR SECCIÓN CARGAR';
             } else { 
-                seccionCargar.style.display = 'none'; 
-                btnToggle.innerText = 'HABILITAR SECCIÓN CARGAR'; 
+                seccionCargar.style.display = 'none'; btnToggle.innerText = 'HABILITAR SECCIÓN CARGAR'; 
             }
         });
 
-        function normalizarNombre(nombre) { 
-            return nombre.toLowerCase().replace(/\s+/g, ''); 
-        }
-        
-        function guardarEnMemoria() { 
-            localStorage.setItem('fandelprode_datos', JSON.stringify(baseDeDatos)); 
-        }
+        function normalizarNombre(nombre) { return nombre.toLowerCase().replace(/\s+/g, ''); }
+        function guardarEnMemoria() { localStorage.setItem('fandelprode_datos', JSON.stringify(baseDeDatos)); }
         
         function borrarTodas() {
             if(confirm('⚠️ ¿Estás completamente seguro de que querés borrar TODOS los partidos de TODAS las boletas?')) {
                 tiposPermitidos.forEach(t => { baseDeDatos[t] = []; });
-                guardarEnMemoria(); 
-                actualizarInterfaz();
+                guardarEnMemoria(); actualizarInterfaz();
             }
         }
         
         function borrarBoletaIndividual(tipo) {
             if(confirm(`¿Estás seguro de que querés borrar todos los partidos de la boleta ${tipo}?`)) {
-                baseDeDatos[tipo] = []; 
-                guardarEnMemoria(); 
-                actualizarInterfaz();
+                baseDeDatos[tipo] = []; guardarEnMemoria(); actualizarInterfaz();
             }
         }
         
-        function borrarBoletaActual() { 
-            const tipo = document.getElementById('input-tipo-boleta').value; 
-            borrarBoletaIndividual(tipo); 
-        }
+        function borrarBoletaActual() { const tipo = document.getElementById('input-tipo-boleta').value; borrarBoletaIndividual(tipo); }
 
         function guardarConfiguracion() {
             const tipo = document.getElementById('input-tipo-boleta').value;
-            configBoletas[tipo] = { 
-                mult: document.getElementById('input-multiplicador').value, 
-                min: document.getElementById('input-minimo').value 
-            };
-            localStorage.setItem('fandelprode_config', JSON.stringify(configBoletas)); 
-            actualizarInterfaz();
+            configBoletas[tipo] = { mult: document.getElementById('input-multiplicador').value, min: document.getElementById('input-minimo').value };
+            localStorage.setItem('fandelprode_config', JSON.stringify(configBoletas)); actualizarInterfaz();
         }
 
         function cambiarBoleta() {
             cancelarEdicion();
             const tipo = document.getElementById('input-tipo-boleta').value;
-            
             let multLimpio = (configBoletas[tipo]?.mult || '').replace(/^x/i, '');
             let minLimpio = (configBoletas[tipo]?.min || '').replace(/^\$/, '');
-            
-            document.getElementById('input-multiplicador').value = multLimpio;
-            document.getElementById('input-minimo').value = minLimpio;
+            document.getElementById('input-multiplicador').value = multLimpio; document.getElementById('input-minimo').value = minLimpio;
             actualizarInterfaz();
         }
 
@@ -2012,55 +1653,34 @@
             document.getElementById('input-circulos').value = circulosPrevios.toString();
             
             let ligaRaw = partido.ligaNombre !== undefined ? partido.ligaNombre : (partido.liga ? partido.liga.replace('ligas/','').replace('.png','') : '');
-            document.getElementById('input-liga').value = ligaRaw;
-            document.getElementById('input-local').value = partido.local; 
-            document.getElementById('input-visitante').value = partido.visitante;
-            
-            document.getElementById('input-url-local').value = partido.escudoLocal.startsWith('http') ? partido.escudoLocal : '';
-            document.getElementById('input-url-visitante').value = partido.escudoVisitante.startsWith('http') ? partido.escudoVisitante : '';
+            document.getElementById('input-liga').value = ligaRaw; document.getElementById('input-local').value = partido.local; document.getElementById('input-visitante').value = partido.visitante;
+            document.getElementById('input-url-local').value = partido.escudoLocal.startsWith('http') ? partido.escudoLocal : ''; document.getElementById('input-url-visitante').value = partido.escudoVisitante.startsWith('http') ? partido.escudoVisitante : '';
 
             idEditando = id;
             const btnAgregar = document.getElementById('btn-agregar');
-            btnAgregar.innerText = 'GUARDAR CAMBIOS'; 
-            btnAgregar.style.background = '#f39c12'; 
-            document.getElementById('btn-cancelar').style.display = 'block';
-            
+            btnAgregar.innerText = 'GUARDAR CAMBIOS'; btnAgregar.style.background = '#f39c12'; document.getElementById('btn-cancelar').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function cancelarEdicion() {
             idEditando = null;
             const btnAgregar = document.getElementById('btn-agregar');
-            btnAgregar.innerText = 'AGREGAR MANUAL'; 
-            btnAgregar.style.background = '#2a5298'; 
-            document.getElementById('btn-cancelar').style.display = 'none';
-            
-            document.getElementById('input-liga').value = ''; 
-            document.getElementById('input-local').value = ''; 
-            document.getElementById('input-visitante').value = '';
-            document.getElementById('input-url-local').value = '';
-            document.getElementById('input-url-visitante').value = '';
+            btnAgregar.innerText = 'AGREGAR MANUAL'; btnAgregar.style.background = '#2a5298'; document.getElementById('btn-cancelar').style.display = 'none';
+            document.getElementById('input-liga').value = ''; document.getElementById('input-local').value = ''; document.getElementById('input-visitante').value = ''; document.getElementById('input-url-local').value = ''; document.getElementById('input-url-visitante').value = '';
         }
 
         function guardarPartido() {
             const tipoBoleta = document.getElementById('input-tipo-boleta').value;
-            
-            if (!idEditando) { 
-                if (!puedeAgregar(tipoBoleta)) return; 
-            }
+            if (!idEditando) { if (!puedeAgregar(tipoBoleta)) return; }
             
             const cantCirculos = parseInt(document.getElementById('input-circulos').value);
             const ligaInput = document.getElementById('input-liga').value;
             const localInput = document.getElementById('input-local').value;
             const visitanteInput = document.getElementById('input-visitante').value;
-            
             const urlLocal = document.getElementById('input-url-local').value;
             const urlVisitante = document.getElementById('input-url-visitante').value;
 
-            if (!localInput || !visitanteInput) { 
-                alert("Por favor, ingresá al menos los nombres de los equipos."); 
-                return; 
-            }
+            if (!localInput || !visitanteInput) { alert("Por favor, ingresá al menos los nombres de los equipos."); return; }
 
             const escudoLocalFinal = urlLocal ? urlLocal : `escudos/${normalizarNombre(localInput)}.png`;
             const escudoVisitanteFinal = urlVisitante ? urlVisitante : `escudos/${normalizarNombre(visitanteInput)}.png`;
@@ -2070,73 +1690,31 @@
                 if (index !== -1) { 
                     let partidoViejo = baseDeDatos[tipoBoleta][index];
                     let nuevaLiga = partidoViejo.liga;
-                    if (partidoViejo.ligaNombre !== ligaInput) { 
-                        nuevaLiga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : ''; 
-                    }
+                    if (partidoViejo.ligaNombre !== ligaInput) { nuevaLiga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : ''; }
 
-                    baseDeDatos[tipoBoleta][index] = { 
-                        ...partidoViejo, 
-                        circulos: cantCirculos, 
-                        liga: nuevaLiga, 
-                        ligaNombre: ligaInput, 
-                        local: localInput, 
-                        escudoLocal: escudoLocalFinal, 
-                        visitante: visitanteInput, 
-                        escudoVisitante: escudoVisitanteFinal 
-                    }; 
+                    baseDeDatos[tipoBoleta][index] = { ...partidoViejo, circulos: cantCirculos, liga: nuevaLiga, ligaNombre: ligaInput, local: localInput, escudoLocal: escudoLocalFinal, visitante: visitanteInput, escudoVisitante: escudoVisitanteFinal }; 
                 }
                 cancelarEdicion(); 
             } else {
                 const liga = ligaInput ? `ligas/${normalizarNombre(ligaInput)}.png` : '';
-                baseDeDatos[tipoBoleta].push({ 
-                    id: Date.now(), 
-                    circulos: cantCirculos, 
-                    liga, 
-                    ligaNombre: ligaInput, 
-                    local: localInput, 
-                    escudoLocal: escudoLocalFinal, 
-                    visitante: visitanteInput, 
-                    escudoVisitante: escudoVisitanteFinal 
-                });
+                baseDeDatos[tipoBoleta].push({ id: Date.now(), circulos: cantCirculos, liga, ligaNombre: ligaInput, local: localInput, escudoLocal: escudoLocalFinal, visitante: visitanteInput, escudoVisitante: escudoVisitanteFinal });
                 cancelarEdicion(); 
             }
-            guardarEnMemoria(); 
-            actualizarInterfaz();
+            guardarEnMemoria(); actualizarInterfaz();
         }
 
-        function eliminarPartido(id, tipoBoleta) { 
-            baseDeDatos[tipoBoleta] = baseDeDatos[tipoBoleta].filter(p => p.id !== id); 
-            guardarEnMemoria(); 
-            actualizarInterfaz(); 
-        }
+        function eliminarPartido(id, tipoBoleta) { baseDeDatos[tipoBoleta] = baseDeDatos[tipoBoleta].filter(p => p.id !== id); guardarEnMemoria(); actualizarInterfaz(); }
 
         let indiceArrastrado = null;
-        
-        function iniciarArrastre(evento, indice) { 
-            indiceArrastrado = indice; 
-            evento.dataTransfer.effectAllowed = 'move'; 
-        }
-        
-        function sobreArrastre(evento) { 
-            evento.preventDefault(); 
-            evento.target.closest('.item-gestion').classList.add('drag-over'); 
-        }
-        
-        function salirArrastre(evento) { 
-            evento.target.closest('.item-gestion').classList.remove('drag-over'); 
-        }
-        
+        function iniciarArrastre(evento, indice) { indiceArrastrado = indice; evento.dataTransfer.effectAllowed = 'move'; }
+        function sobreArrastre(evento) { evento.preventDefault(); evento.target.closest('.item-gestion').classList.add('drag-over'); }
+        function salirArrastre(evento) { evento.target.closest('.item-gestion').classList.remove('drag-over'); }
         function soltarElemento(evento, indiceDestino, tipoBoleta) {
-            evento.preventDefault(); 
-            evento.target.closest('.item-gestion').classList.remove('drag-over');
+            evento.preventDefault(); evento.target.closest('.item-gestion').classList.remove('drag-over');
             if (indiceArrastrado === null || indiceArrastrado === indiceDestino) return;
-            
             let partidoMovido = baseDeDatos[tipoBoleta].splice(indiceArrastrado, 1)[0];
             baseDeDatos[tipoBoleta].splice(indiceDestino, 0, partidoMovido);
-            
-            guardarEnMemoria(); 
-            actualizarInterfaz(); 
-            indiceArrastrado = null;
+            guardarEnMemoria(); actualizarInterfaz(); indiceArrastrado = null;
         }
 
         function actualizarInterfaz() {
@@ -2144,8 +1722,7 @@
             const listaGestion = document.getElementById('lista-gestion');
             const tipoActivoSelect = document.getElementById('input-tipo-boleta').value;
             
-            contenedorBoletas.innerHTML = ''; 
-            listaGestion.innerHTML = '';
+            contenedorBoletas.innerHTML = ''; listaGestion.innerHTML = '';
 
             baseDeDatos[tipoActivoSelect].forEach((partido, index) => {
                 listaGestion.innerHTML += `
@@ -2162,18 +1739,10 @@
             Object.keys(baseDeDatos).forEach(tipo => {
                 const partidos = baseDeDatos[tipo];
                 if (partidos.length > 0 || tipo === tipoActivoSelect) {
-                    let escala = 1; 
-                    let partidosHTML = '';
-                    
-                    if (tipo === 'SOÑADORA') { 
-                        if (partidos.length > 8) { escala = 8 / partidos.length; } 
-                    } 
-                    else if (tipo === 'FÁCIL' || tipo === 'RESULTADO') { 
-                        escala = 1; 
-                    } 
-                    else { 
-                        if (partidos.length > 6) { escala = 6 / partidos.length; } 
-                    }
+                    let escala = 1; let partidosHTML = '';
+                    if (tipo === 'SOÑADORA') { if (partidos.length > 8) { escala = 8 / partidos.length; } } 
+                    else if (tipo === 'FÁCIL' || tipo === 'RESULTADO') { escala = 1; } 
+                    else { if (partidos.length > 6) { escala = 6 / partidos.length; } }
 
                     partidos.forEach(partido => {
                         let logoLigaHTML = partido.liga ? `<div class="liga-wrapper"><img src="${partido.liga}" alt="Liga" onerror="this.onerror=null; this.parentElement.style.display='none'"></div>` : ``;
@@ -2200,9 +1769,7 @@
                         } else {
                             let cantCirculos = partido.circulos !== undefined ? partido.circulos : (partido.deporte === 'basket' || partido.deporte === 'tenis' ? 2 : 3);
                             let circulosHTML = '';
-                            for(let i=0; i<cantCirculos; i++) { 
-                                circulosHTML += `<div class="circulo"></div>`; 
-                            }
+                            for(let i=0; i<cantCirculos; i++) { circulosHTML += `<div class="circulo"></div>`; }
 
                             partidosHTML += `
                                 <div class="partido">
@@ -2228,16 +1795,17 @@
                     
                     const claseExtra = tipo === 'SOÑADORA' ? 'boleta-sonadora' : (tipo === 'FÁCIL' ? 'boleta-facil' : (tipo === 'RESULTADO' ? 'boleta-resultado' : ''));
                     const boletaID = `boleta-render-${tipo}`;
-                    
                     let textoAclaracion = tipo === 'RESULTADO' ? 'ANOTÁ RESULTADO' : 'MARCÁ CON UNA X';
 
                     contenedorBoletas.innerHTML += `
                         <div class="contenedor-individual">
                             <div class="ig-story ${claseExtra}" id="${boletaID}" style="background: ${coloresBoleta[tipo]}; --escala: ${escala};">
-                                <img src="sdfghjkl-removebg-preview.png" class="logo-marca" alt="Logo" onerror="this.style.display='none'">
                                 
                                 <div class="header-boleta">
-                                    <h3>FAN DEL PRODE</h3>
+                                    <div class="titulo-wrapper">
+                                        <img src="sdfghjkl-removebg-preview.png" class="logo-marca" alt="Logo" onerror="this.style.display='none'">
+                                        <h3>FAN DEL PRODE</h3>
+                                    </div>
                                     <div class="etiquetas-header">
                                         <div class="etiqueta-tipo">BOLETA ${tipo}</div>
                                         <div class="etiqueta-marca">${textoAclaracion}</div>
@@ -2263,7 +1831,6 @@
             const transformOriginal = elemento.style.transform;
             elemento.style.transform = 'scale(1)';
             
-            // Timeout agregado para dar tiempo a renderizar la imagen base64 o cross-origin
             setTimeout(() => {
                 html2canvas(elemento, { 
                     scale: 4, 
