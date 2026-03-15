@@ -556,7 +556,6 @@
             overflow: hidden; 
         }
 
-        /* --- LOGO CON TAMAÑO FIJO DESVINCULADO DE LA ESCALA --- */
         .logo-marca {
             position: absolute;
             top: 22px;   
@@ -644,11 +643,21 @@
             justify-content: center; 
         }
 
-        .logo-liga { 
-            height: calc(20px * var(--escala)); 
-            object-fit: contain; 
-            margin-bottom: calc(3px * var(--escala)); 
-            filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5)); 
+        /* --- NUEVO SISTEMA DE ESCUDOS ANTIDEFORMACIÓN --- */
+        .liga-wrapper {
+            height: calc(20px * var(--escala));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: calc(3px * var(--escala));
+        }
+
+        .liga-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5));
         }
 
         .equipo { 
@@ -658,12 +667,21 @@
             width: calc(100px * var(--escala)); 
         }
 
-        .equipo img { 
-            width: calc(35px * var(--escala)); 
-            height: calc(35px * var(--escala)); 
-            object-fit: contain; 
-            margin-bottom: calc(3px * var(--escala)); 
-            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.5)); 
+        .escudo-wrapper {
+            width: calc(35px * var(--escala));
+            height: calc(35px * var(--escala));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: calc(3px * var(--escala));
+        }
+
+        .escudo-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.5));
         }
 
         .equipo span { 
@@ -749,10 +767,10 @@
             padding: calc(4px * var(--escala)) calc(8px * var(--escala)); 
             border-radius: calc(8px * var(--escala)); 
         }
-        .boleta-sonadora .logo-liga { 
+        .boleta-sonadora .liga-wrapper { 
             height: calc(16px * var(--escala)); 
         }
-        .boleta-sonadora .equipo img { 
+        .boleta-sonadora .escudo-wrapper { 
             width: calc(30px * var(--escala)); 
             height: calc(30px * var(--escala)); 
         }
@@ -782,11 +800,11 @@
             padding: calc(15px * var(--escala)) calc(15px * var(--escala)); 
             border-radius: calc(15px * var(--escala)); 
         }
-        .boleta-facil .logo-liga { 
+        .boleta-facil .liga-wrapper { 
             height: calc(25px * var(--escala)); 
             margin-bottom: calc(5px * var(--escala)); 
         }
-        .boleta-facil .equipo img { 
+        .boleta-facil .escudo-wrapper { 
             width: calc(50px * var(--escala)); 
             height: calc(50px * var(--escala)); 
             margin-bottom: calc(5px * var(--escala)); 
@@ -818,7 +836,7 @@
         .boleta-resultado .equipo { 
             width: 90px; 
         }
-        .boleta-resultado .equipo img { 
+        .boleta-resultado .escudo-wrapper { 
             width: 65px; 
             height: 65px; 
             margin-bottom: 10px; 
@@ -830,7 +848,7 @@
         .boleta-resultado .centro-opciones { 
             width: 50px; 
         }
-        .boleta-resultado .logo-liga { 
+        .boleta-resultado .liga-wrapper { 
             height: 35px; 
             margin-bottom: 10px; 
         }
@@ -2158,13 +2176,13 @@
                     }
 
                     partidos.forEach(partido => {
-                        let logoLigaHTML = partido.liga ? `<img src="${partido.liga}" class="logo-liga" alt="Liga" onerror="this.onerror=null; this.style.display='none'">` : ``;
+                        let logoLigaHTML = partido.liga ? `<div class="liga-wrapper"><img src="${partido.liga}" alt="Liga" onerror="this.onerror=null; this.parentElement.style.display='none'"></div>` : ``;
 
                         if (tipo === 'RESULTADO') {
                             partidosHTML += `
                                 <div class="partido">
                                     <div class="equipo">
-                                        <img src="${partido.escudoLocal}" alt="${partido.local}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                        <div class="escudo-wrapper"><img src="${partido.escudoLocal}" alt="${partido.local}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'"></div>
                                         <span>${partido.local}</span>
                                     </div>
                                     <div class="cuadrado-resultado"></div>
@@ -2174,7 +2192,7 @@
                                     </div>
                                     <div class="cuadrado-resultado"></div>
                                     <div class="equipo">
-                                        <img src="${partido.escudoVisitante}" alt="${partido.visitante}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                        <div class="escudo-wrapper"><img src="${partido.escudoVisitante}" alt="${partido.visitante}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'"></div>
                                         <span>${partido.visitante}</span>
                                     </div>
                                 </div>
@@ -2189,7 +2207,7 @@
                             partidosHTML += `
                                 <div class="partido">
                                     <div class="equipo">
-                                        <img src="${partido.escudoLocal}" alt="${partido.local}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                        <div class="escudo-wrapper"><img src="${partido.escudoLocal}" alt="${partido.local}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'"></div>
                                         <span>${partido.local}</span>
                                     </div>
                                     <div class="centro-opciones">
@@ -2197,7 +2215,7 @@
                                         <div class="opciones">${circulosHTML}</div>
                                     </div>
                                     <div class="equipo">
-                                        <img src="${partido.escudoVisitante}" alt="${partido.visitante}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'">
+                                        <div class="escudo-wrapper"><img src="${partido.escudoVisitante}" alt="${partido.visitante}" onerror="this.onerror=null; this.src='https://via.placeholder.com/40'"></div>
                                         <span>${partido.visitante}</span>
                                     </div>
                                 </div>
